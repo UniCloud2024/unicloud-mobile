@@ -18,7 +18,7 @@ jobs:
            java-version: 17
            distribution: 'temurin'
        - name: Unit tests
-         run: bash ./gradlew test — stacktrace
+         run: bash ./gradlew test -stacktrace
       
    build:
     runs-on: ubuntu-latest
