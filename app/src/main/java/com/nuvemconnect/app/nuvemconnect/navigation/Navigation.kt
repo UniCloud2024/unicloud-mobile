@@ -1,11 +1,11 @@
-package com.crosoften.nuvemconnect.navigation
+package com.nuvemconnect.app.nuvemconnect.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.crosoften.nuvemconnect.navigation.graph.loginScreen
-import com.crosoften.nuvemconnect.navigation.graph.splashScreen
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.loginScreen
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.splashScreen
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {

@@ -1,4 +1,4 @@
-package com.crosoften.nuvemconnect.navigation
+package com.nuvemconnect.app.nuvemconnect.navigation
 
 sealed class Screens(val route: String) {
     data object SignIn: Screens("login")

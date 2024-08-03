@@ -1,4 +1,4 @@
-package com.crosoften.nuvemconnect.ui.theme
+package com.nuvemconnect.app.nuvemconnect.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

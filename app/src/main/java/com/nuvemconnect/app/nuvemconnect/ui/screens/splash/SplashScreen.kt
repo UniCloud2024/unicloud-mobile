@@ -1,4 +1,4 @@
-package com.crosoften.nuvemconnect.ui.screens.splash
+package com.nuvemconnect.app.nuvemconnect.ui.screens.splash
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.crosoften.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.R
 import kotlinx.coroutines.delay
 
 @Composable

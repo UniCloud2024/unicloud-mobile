@@ -1,4 +1,4 @@
-package com.crosoften.nuvemconnect
+package com.nuvemconnect.app.nuvemconnect
 
 import android.app.Application
 import org.koin.core.context.startKoin
