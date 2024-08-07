@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen
 import com.nuvemconnect.app.nuvemconnect.R
 import kotlinx.coroutines.delay
 
@@ -20,7 +22,7 @@ fun SplashScreen(modifier: Modifier = Modifier, navigateToLogin: () -> Unit) {
         navigateToLogin()
     }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Icon(
             painter = painterResource(id = R.drawable.nuvem_connect_logo),
             contentDescription = stringResource(
@@ -29,4 +31,10 @@ fun SplashScreen(modifier: Modifier = Modifier, navigateToLogin: () -> Unit) {
             tint = Color(0xFF0D2844)
         )
     }
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun SplashScreenPreview() {
+    SplashScreen {}
 }
