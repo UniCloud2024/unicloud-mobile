@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 
 @Composable
 fun GoogleButton(
@@ -39,7 +40,7 @@ fun GoogleButton(
     textColor: Color = MaterialTheme.colorScheme.surface,
     fontSize: TextUnit = 16.sp,
     border: BorderStroke? = null,
-    fontWeight: FontWeight = FontWeight.W400
+    fontWeight: FontWeight = FontWeight.SemiBold
 ) {
     Button(
         onClick = onClick,
@@ -58,6 +59,7 @@ fun GoogleButton(
         Icon(
             painter = painterResource(id = R.drawable.google_icon),
             contentDescription = "icone_google",
+            tint = Color.Unspecified
         )
         Spacer(modifier = modifier.width(4.dp))
         Text(
@@ -65,8 +67,8 @@ fun GoogleButton(
             fontSize = fontSize,
             style = textStyle,
             color = textColor,
+            fontFamily = poppinsFontFamily,
             fontWeight = fontWeight,
-            modifier = Modifier.padding(vertical = 9.dp)
         )
     }
 }

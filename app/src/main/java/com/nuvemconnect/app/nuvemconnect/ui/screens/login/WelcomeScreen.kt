@@ -1,34 +1,42 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.login
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
-import com.nuvemconnect.app.nuvemconnect.ui.theme.lightSkyBlue
-import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumBlue
-import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary
+import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary300
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary600
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary950
 
 @Composable
-fun WelcomeScreen(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
-
+fun WelcomeScreen(modifier: Modifier = Modifier, navController: NavController) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -38,7 +46,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
         Text(
             text = stringResource(id = R.string.logo_name),
             fontWeight = FontWeight.Bold,
-            color = colorScheme.secondary,
+            color = primary950,
             fontSize = 40.sp,
             modifier = modifier.padding(top = 100.dp)
         )
@@ -53,12 +61,14 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxWidth()
                 .padding(top = 120.1.dp),
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate(Screens.Register.route)
+            },
             text = "Registre-se",
-            backgroundColor = mediumBlue,
-            textColor = secondary,
+            backgroundColor = primary600,
+            textColor = Color.White,
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
         CustomButton(
             modifier = modifier
@@ -68,23 +78,63 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
                 navController.navigate(Screens.Login.route)
             },
             text = "Entrar",
-            backgroundColor = lightSkyBlue,
-            textColor = secondary,
+            backgroundColor = primary300,
+            textColor = primary950,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        Text(
-            text = "Precisa de ajuda? Entre em contato \n conosco",
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W400,
-            modifier = modifier.padding(top = 46.dp)
-        )
+        Spacer(modifier = modifier.height(56.dp))
+        Text(text = helpText(), textAlign = TextAlign.Center)
+
+
     }
 }
+
+@Composable
+fun helpText(): AnnotatedString {
+    val help = buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(
+                fontSize = 14.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Normal,
+            )
+        ) {
+            append(stringResource(R.string.precisa_de_ajuda))
+        }
+
+        withStyle(
+            style = SpanStyle(
+                fontSize = 14.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Normal,
+
+                textDecoration = TextDecoration.Underline
+            )
+        ) {
+            append(stringResource(R.string.entre_em_contato))
+            pushStringAnnotation(tag = "URL", annotation = " futuro link aqui")
+        }
+
+        withStyle(
+            style = SpanStyle(
+                fontSize = 14.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Normal,
+                textDecoration = TextDecoration.Underline
+            )
+        ) {
+            append(stringResource(R.string.conosco))
+            pushStringAnnotation(tag = "URL", annotation = " futuro link aqui")
+        }
+    }
+    return help
+}
+
 
 @Preview(showBackground = true)
 @Composable
 private fun LoginScreenPreview() {
-    WelcomeScreen()
+    val navController = rememberNavController()
+    WelcomeScreen(navController = navController)
 }

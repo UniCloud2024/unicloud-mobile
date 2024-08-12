@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -31,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
+import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 
 @Composable
@@ -41,13 +39,18 @@ fun PasswordTextField(
     titleContainer: String,
     placeholder: String,
 ) {
-    var passwordVisibility by rememberSaveable { mutableStateOf(true)}
+    var passwordVisibility by rememberSaveable { mutableStateOf(true) }
 
     Column(
         modifier = Modifier.fillMaxWidth()
 
     ) {
-        Text(text = titleContainer, fontSize = 16.sp, fontWeight = FontWeight.W500)
+        Text(
+            text = titleContainer,
+            fontSize = 16.sp,
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.SemiBold
+        )
         Spacer(modifier = modifier.height(5.dp))
         OutlinedTextField(
             value = value,
@@ -55,17 +58,26 @@ fun PasswordTextField(
                 if (newValue.length <= 40) onValueChange(newValue)
             },
             trailingIcon = {
-               val image = if(passwordVisibility) painterResource(id = R.drawable.baseline_visibility_24) else painterResource(id = R.drawable.baseline_visibility_off_24)
+                val image =
+                    if (passwordVisibility) painterResource(id = R.drawable.baseline_visibility_24) else painterResource(
+                        id = R.drawable.baseline_visibility_off_24
+                    )
                 val description = if (passwordVisibility) "Hide password" else "Show password"
 
 
-                IconButton(onClick = { passwordVisibility = !passwordVisibility}) {
-                        Icon(painter = image, contentDescription = description)
+                IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                    Icon(painter = image, contentDescription = description)
                 }
             },
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             singleLine = true,
-            placeholder = { Text(text = placeholder) },
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Light
+                )
+            },
             modifier = modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
             shape = RoundedCornerShape(8),

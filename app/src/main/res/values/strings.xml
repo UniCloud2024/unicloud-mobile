@@ -2,4 +2,39 @@
     <string name="app_name">Nuvem connect</string>
     <string name="logo">Logo</string>
     <string name="logo_name">NuvemConnect</string>
+
+    <!-- TODO: Forgot Password  -->
+    <string name="subtitle_forgot_password_1">Se você esqueceu sua senha, por favor digite seu e-mail abaixo para restaurar a senha.</string>
+    <string name="subtitle_forgot_password_2">Enviamos um e-mail para o seu e-mail, verifique seu e-mail e digite o número abaixo</string>
+    <string name="subtitle_forgot_password_3">Insira uma nova senha</string>
+    <string name="digite_seu_email">Digite seu email</string>
+    <string name="adicione_seu_email">Adicione seu email</string>
+    <string name="voltar">Voltar</string>
+    <string name="title_forgot_password_2">Insira seu código</string>
+    <string name="verificar">Verificar</string>
+    <string name="enviar_codigo">Enviar código</string>
+    <string name="title_forgot_password_1">Esqueceu sua senha?</string>
+    <string name="title_forgot_password_3">Redefinir sua senha</string>
+    <string name="nova_senha">Nova senha</string>
+    <string name="digite_sua_senha">Digite sua senha</string>
+    <string name="confirme_sua_senha">Confirme sua senha</string>
+    <string name="resetar_senha">Resetar senha</string>
+    <string name="voltar_para">"Voltar para "</string>
+    <string name="fazer_login">Fazer Login</string>
+    <string name="title_login_screen">Bem vindo de volta!</string>
+    <string name="subtitle_login_screen">Para começar, faça login em sua conta</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
+    <string name="ou_faca_seu_login">" Ou faça seu login "</string>
+    <string name="n_o_tem_uma_conta">"Não tem uma conta "</string>
+    <string name="inscreva_se">" Inscreva-se"</string>
+    <string name="registre_se">Registre-se</string>
+    <string name="insira_suas_informa_es_pessoais">Insira suas informações pessoais</string>
+    <string name="nome_do_usuario">Nome do Usuario</string>
+    <string name="digite_seu_nome">Digite seu nome</string>
+    <string name="registrar">Registrar</string>
+    <string name="precisa_de_ajuda">Precisa de ajuda?</string>
+    <string name="entre_em_contato">" Entre em contato\n"</string>
+    <string name="conosco">conosco</string>
 </resources>

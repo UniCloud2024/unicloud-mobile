@@ -15,13 +15,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nuvemconnect.app.nuvemconnect.ui.theme.PurpleGrey40
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
+import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 
 @Composable
@@ -31,12 +32,17 @@ fun CustomTextField(
     value: String,
     titleContainer: String,
     placeholder: String,
-    ) {
+) {
     Column(
         modifier = Modifier.fillMaxWidth()
 
     ) {
-        Text(text = titleContainer, fontSize = 16.sp, fontWeight = FontWeight.W500)
+        Text(
+            text = titleContainer,
+            fontSize = 16.sp,
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.SemiBold
+        )
         Spacer(modifier = modifier.height(5.dp))
         OutlinedTextField(
             value = value,
@@ -44,7 +50,13 @@ fun CustomTextField(
                 if (newValue.length <= 40) onValueChange(newValue)
             },
             singleLine = true,
-            placeholder = { Text(text = placeholder) },
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Light
+                )
+            },
             modifier = modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
             shape = RoundedCornerShape(8),
@@ -53,11 +65,13 @@ fun CustomTextField(
                 focusedBorderColor = primary,
                 focusedTextColor = Color.Black,
                 unfocusedContainerColor = mediumGray,
+            ),
+            textStyle = TextStyle(
+                fontFamily = poppinsFontFamily,
 
+                )
 
-                ),
-
-            )
+        )
     }
 }
 
