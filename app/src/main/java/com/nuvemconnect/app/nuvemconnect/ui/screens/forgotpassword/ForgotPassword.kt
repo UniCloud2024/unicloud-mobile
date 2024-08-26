@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.model.error.EmailErrorType
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
@@ -38,14 +39,18 @@ fun ForgotPassword(modifier: Modifier = Modifier, navController: NavController) 
             TopBar(
                 headingSize = 28.sp,
                 headingTitle = stringResource(R.string.title_forgot_password_1),
-                subtitleText = stringResource(id = R.string.subtitle_forgot_password_1)
+                subtitleText = stringResource(id = R.string.subtitle_forgot_password_1),
+                navController = navController,
+                onBackClick = { navController.navigateUp() }
             )
             Spacer(modifier = modifier.height(45.dp))
             CustomTextField(
                 onValueChange = {},
                 value = "",
                 titleContainer = stringResource(R.string.adicione_seu_email),
-                placeholder = stringResource(R.string.digite_seu_email)
+                placeholder = stringResource(R.string.digite_seu_email),
+                validate = { EmailErrorType.Empty },
+                isUserInteracted = false
             )
             Spacer(modifier = modifier.height(26.dp))
             CustomButton(

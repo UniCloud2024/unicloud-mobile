@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.model.error.EmailErrorType
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
@@ -39,7 +40,10 @@ fun PasswordTextField(
     titleContainer: String,
     placeholder: String,
 ) {
-    var passwordVisibility by rememberSaveable { mutableStateOf(true) }
+    var passwordVisibility by rememberSaveable { mutableStateOf(false) }
+    var error by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -75,7 +79,8 @@ fun PasswordTextField(
                 Text(
                     text = placeholder,
                     fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
+                    maxLines = 1
                 )
             },
             modifier = modifier.fillMaxWidth(),
@@ -93,17 +98,18 @@ fun PasswordTextField(
     }
 }
 
+
 @Preview(showSystemUi = false, showBackground = true)
 @Composable
 private fun CustomTextFieldPreview() {
     val value by rememberSaveable {
         mutableStateOf("")
     }
-    CustomTextField(
+    PasswordTextField(
         onValueChange = {},
         value = value,
         titleContainer = "Titulo do container",
-        placeholder = "Descrição do texto"
+        placeholder = "Descrição do texto",
     )
 
 }

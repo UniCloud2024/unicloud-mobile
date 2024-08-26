@@ -21,6 +21,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nuvemconnect.app.nuvemconnect.model.error.EmailErrorType
+import com.nuvemconnect.app.nuvemconnect.ui.theme.error300
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
@@ -32,10 +34,13 @@ fun CustomTextField(
     value: String,
     titleContainer: String,
     placeholder: String,
+    validate: (String) -> EmailErrorType,
+    isUserInteracted: Boolean
 ) {
+    val error = if (isUserInteracted) validate(value) else EmailErrorType.None
+
     Column(
         modifier = Modifier.fillMaxWidth()
-
     ) {
         Text(
             text = titleContainer,
@@ -47,14 +52,16 @@ fun CustomTextField(
         OutlinedTextField(
             value = value,
             onValueChange = { newValue ->
-                if (newValue.length <= 40) onValueChange(newValue)
+                if (newValue.length <= 40)
+                    onValueChange(newValue)
             },
             singleLine = true,
             placeholder = {
                 Text(
                     text = placeholder,
                     fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
+                    maxLines = 1
                 )
             },
             modifier = modifier.fillMaxWidth(),
@@ -69,9 +76,19 @@ fun CustomTextField(
             textStyle = TextStyle(
                 fontFamily = poppinsFontFamily,
 
-                )
-
+                ),
+            isError = error != EmailErrorType.None,
         )
+        if (error != EmailErrorType.None) {
+            Text(
+                text = error.message,
+                color = error300,
+                fontSize = 12.sp,
+                fontFamily = poppinsFontFamily
+            )
+        }
+
+
     }
 }
 
@@ -85,7 +102,10 @@ private fun CustomTextFieldPreview() {
         onValueChange = {},
         value = value,
         titleContainer = "Titulo do container",
-        placeholder = "Descrição do texto"
+        placeholder = "Descrição do texto",
+        validate = { EmailErrorType.None },
+        isUserInteracted = false
+
     )
 
 }

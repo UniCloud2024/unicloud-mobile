@@ -10,6 +10,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.ForgotPasswor
 import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.PasswordCode
 import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.ResetPassword
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginScreen
+import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.WelcomeScreen
 import com.nuvemconnect.app.nuvemconnect.ui.screens.register.RegisterScreen
 
@@ -33,11 +34,11 @@ fun Navigation(modifier: Modifier = Modifier) {
         }
 
         composable(route = Screens.Register.route){
-            RegisterScreen()
+            RegisterScreen(navController = navController)
         }
 
         composable(route = Screens.Login.route) {
-            LoginScreen(modifier, navController)
+            LoginScreen(modifier, navController, LoginViewModel())
         }
 
         composable(route = Screens.Password.route){
@@ -52,7 +53,5 @@ fun Navigation(modifier: Modifier = Modifier) {
         composable(route = Screens.ResetPassword.route) {
             ResetPassword(navController = navController)
         }
-
-        
     }
 }

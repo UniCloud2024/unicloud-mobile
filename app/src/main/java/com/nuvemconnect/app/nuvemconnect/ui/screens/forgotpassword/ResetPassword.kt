@@ -22,45 +22,46 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 
 @Composable
 fun ResetPassword(modifier: Modifier = Modifier, navController: NavController) {
-    Column {
-        Column(
-            horizontalAlignment = Alignment.Start,
-            modifier = modifier.padding(top = 36.dp, start = 16.dp, end = 16.dp)
-        ) {
-            TopBar(
-                headingSize = 28.sp,
-                headingTitle = stringResource(R.string.title_forgot_password_3),
-                subtitleText = stringResource(
-                    id = R.string.subtitle_forgot_password_3
-                )
-            )
-            Spacer(modifier = modifier.height(45.dp))
-            PasswordTextField(
-                onValueChange = {},
-                value = "",
-                titleContainer = stringResource(R.string.nova_senha),
-                placeholder = stringResource(R.string.digite_sua_senha)
-            )
-            Spacer(modifier = modifier.height(5.dp))
-            PasswordTextField(
-                onValueChange = {},
-                value = "",
-                titleContainer = stringResource(R.string.confirme_sua_senha),
-                placeholder = stringResource(id = R.string.digite_sua_senha)
-            )
-            Spacer(modifier = modifier.height(26.dp))
-            CustomButton(
+    Column(
+        horizontalAlignment = Alignment.Start,
+        modifier = modifier.padding(top = 36.dp, start = 16.dp, end = 16.dp)
+    ) {
+        TopBar(
+            headingSize = 28.sp,
+            headingTitle = stringResource(R.string.title_forgot_password_3),
+            subtitleText = stringResource(
+                id = R.string.subtitle_forgot_password_3
+            ),
+            navController = navController,
+            onBackClick = { navController.navigateUp() }
+        )
+        Spacer(modifier = modifier.height(45.dp))
+        PasswordTextField(
+            onValueChange = {},
+            value = "",
+            titleContainer = stringResource(R.string.nova_senha),
+            placeholder = stringResource(R.string.digite_sua_senha)
+        )
+        Spacer(modifier = modifier.height(5.dp))
+        PasswordTextField(
+            onValueChange = {},
+            value = "",
+            titleContainer = stringResource(R.string.confirme_sua_senha),
+            placeholder = stringResource(id = R.string.digite_sua_senha)
+        )
+        Spacer(modifier = modifier.height(26.dp))
+        CustomButton(
 
-                onClick = {
-                    navController.navigate(Screens.Login.route)
-                },
-                text = stringResource(R.string.resetar_senha),
-                backgroundColor = primary
-            )
-            Spacer(modifier = Modifier.height(21.dp))
-        }
+            onClick = {
+                navController.navigate(Screens.Login.route)
+            },
+            text = stringResource(R.string.resetar_senha),
+            backgroundColor = primary
+        )
+        Spacer(modifier = Modifier.height(21.dp))
     }
 }
+
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
