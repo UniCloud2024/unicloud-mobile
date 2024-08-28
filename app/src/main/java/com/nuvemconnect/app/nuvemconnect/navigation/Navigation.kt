@@ -13,6 +13,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginScreen
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.WelcomeScreen
 import com.nuvemconnect.app.nuvemconnect.ui.screens.register.RegisterScreen
+import com.nuvemconnect.app.nuvemconnect.ui.screens.register.VerificationLinkScreen
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
@@ -22,9 +23,9 @@ fun Navigation(modifier: Modifier = Modifier) {
         navController = navController,
         startDestination = Screens.Splash.route
     ) {
-        splashScreen{
-            navController.navigate(Screens.Welcome.route){
-                popUpTo(Screens.Splash.route){
+        splashScreen {
+            navController.navigate(Screens.Welcome.route) {
+                popUpTo(Screens.Splash.route) {
                     inclusive = true
                 }
             }
@@ -33,7 +34,7 @@ fun Navigation(modifier: Modifier = Modifier) {
             WelcomeScreen(navController = navController)
         }
 
-        composable(route = Screens.Register.route){
+        composable(route = Screens.Register.route) {
             RegisterScreen(navController = navController)
         }
 
@@ -41,7 +42,7 @@ fun Navigation(modifier: Modifier = Modifier) {
             LoginScreen(modifier, navController, LoginViewModel())
         }
 
-        composable(route = Screens.Password.route){
+        composable(route = Screens.Password.route) {
             ForgotPassword(modifier, navController)
         }
         composable(route = Screens.ForgotPassword.route) {
@@ -52,6 +53,9 @@ fun Navigation(modifier: Modifier = Modifier) {
         }
         composable(route = Screens.ResetPassword.route) {
             ResetPassword(navController = navController)
+        }
+        composable(route = Screens.VerificationLink.route) {
+            VerificationLinkScreen(navController = navController)
         }
     }
 }

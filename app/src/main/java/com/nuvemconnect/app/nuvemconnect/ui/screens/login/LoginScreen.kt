@@ -33,13 +33,14 @@ import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.GoogleButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
-import com.nuvemconnect.app.nuvemconnect.ui.theme.headingFontFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, viewModel: LoginViewModel) {
+
 
     val email by viewModel.email.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
@@ -48,27 +49,25 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, vie
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Spacer(modifier = modifier.height(70.dp))
+        Spacer(modifier = modifier.height(90.dp))
         Text(
             text = stringResource(R.string.title_login_screen),
-            fontSize = 36.sp,
-            fontFamily = headingFontFamily,
+            fontSize = 28.sp,
+            fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.ExtraBold
         )
-        Spacer(modifier = modifier.height(16.dp))
+        Spacer(modifier = modifier.height(21.dp))
         Text(
             text = stringResource(R.string.subtitle_login_screen),
             fontSize = 16.sp,
-
-            fontFamily = poppinsFontFamily,
+            fontFamily = dmSansFamily,
             fontWeight = FontWeight.Normal,
             color = Color.Gray
         )
-        Spacer(modifier = modifier.height(41.dp))
+        Spacer(modifier = modifier.height(52.dp))
         CustomTextField(
             value = email,
             onValueChange = { newEmail ->
@@ -88,11 +87,12 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, vie
             },
             value = password,
             titleContainer = stringResource(R.string.senha),
-            placeholder = stringResource(R.string.senha),
+            placeholder = stringResource(R.string.digite_sua_senha),
         )
-
+        Spacer(modifier = modifier.height(26.dp))
         Text(
             text = stringResource(R.string.esqueceu_sua_senha),
+            color = primary,
             modifier = modifier
                 .align(Alignment.End)
                 .clickable {
@@ -100,15 +100,16 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, vie
                 }
                 .padding(top = 10.dp),
             fontSize = 16.sp,
-            fontFamily = poppinsFontFamily,
+            fontFamily = dmSansFamily,
             textDecoration = TextDecoration.Underline
         )
-        Spacer(modifier = modifier.height(31.dp))
+        Spacer(modifier = modifier.height(26.dp))
         CustomButton(
             onClick = { /*TODO*/ },
             text = "Entrar",
             modifier = modifier.fillMaxWidth(),
-            backgroundColor = primary
+            backgroundColor = primary,
+            fontWeight = FontWeight.Bold
         )
         Spacer(modifier = modifier.height(40.dp))
         Row(
@@ -122,7 +123,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, vie
             Text(
                 text = stringResource(R.string.ou_faca_seu_login),
                 fontSize = 14.sp,
-                fontFamily = poppinsFontFamily,
+                fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Normal,
                 color = Color.Gray
             )
@@ -143,17 +144,17 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, vie
         Spacer(modifier = modifier.height(30.dp))
         Row {
             Text(
-                text = stringResource(R.string.n_o_tem_uma_conta),
+                text = stringResource(R.string.nao_tem_uma_conta),
                 color = Color.Gray,
-                fontSize = 14.sp,
-                fontFamily = poppinsFontFamily,
+                fontSize = 16.sp,
+                fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Normal
             )
             Text(
                 text = stringResource(R.string.inscreva_se),
                 color = primary,
-                fontSize = 14.sp,
-                fontFamily = poppinsFontFamily,
+                fontSize = 16.sp,
+                fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.clickable {
                     navController.navigate(Screens.Register.route)

@@ -31,14 +31,10 @@ val poppinsFontFamily = FontFamily(
     Font(R.font.poppins_semibold, FontWeight.SemiBold)
 )
 
-val headingFontFamily = FontFamily(
-    Font(R.font.pretendard_black, FontWeight.Black),
-    Font(R.font.pretendard_bold, FontWeight.Bold),
-    Font(R.font.pretendard_extrabold, FontWeight.ExtraBold),
-    Font(R.font.pretendard_extralight, FontWeight.ExtraLight),
-    Font(R.font.pretendard_light, FontWeight.Light),
-    Font(R.font.pretendard_medium, FontWeight.Light),
-    Font(R.font.pretendard_regular, FontWeight.Normal),
-    Font(R.font.pretendard_semibold, FontWeight.SemiBold),
-    Font(R.font.pretendard_thin, FontWeight.Thin)
+
+val dmSansFamily = FontFamily(
+    Font(R.font.dm_sans_regular, FontWeight.Normal),
+    Font(R.font.dm_sans_medium, FontWeight.Medium),
+    Font(R.font.dm_sans_semibold, FontWeight.SemiBold),
+    Font(R.font.dm_sans_bold, FontWeight.Bold)
 )

@@ -35,7 +35,7 @@ fun CustomButton(
     contentPadding: PaddingValues = PaddingValues(16.dp),
     textColor: Color = MaterialTheme.colorScheme.surface,
     fontSize: TextUnit = 18.sp,
-    fontWeight: FontWeight = FontWeight.Normal,
+    fontWeight: FontWeight = FontWeight.SemiBold,
     onClick: () -> Unit,
 ) {
     Button(

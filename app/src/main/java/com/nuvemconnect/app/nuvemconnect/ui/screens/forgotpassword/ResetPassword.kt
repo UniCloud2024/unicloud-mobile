@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
@@ -18,10 +20,17 @@ import com.nuvemconnect.app.nuvemconnect.navigation.Screens
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
+import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 
 @Composable
-fun ResetPassword(modifier: Modifier = Modifier, navController: NavController) {
+fun ResetPassword(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
+    val password by viewModel.password.collectAsStateWithLifecycle()
+    val confirmedPassword by viewModel.confirmPassword.collectAsStateWithLifecycle()
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = modifier.padding(top = 36.dp, start = 16.dp, end = 16.dp)
@@ -37,15 +46,19 @@ fun ResetPassword(modifier: Modifier = Modifier, navController: NavController) {
         )
         Spacer(modifier = modifier.height(45.dp))
         PasswordTextField(
-            onValueChange = {},
-            value = "",
-            titleContainer = stringResource(R.string.nova_senha),
+            value = password,
+            onValueChange = { newPassword ->
+                viewModel.onPasswordChange(newPassword)
+            },
+            titleContainer = stringResource(R.string.senha),
             placeholder = stringResource(R.string.digite_sua_senha)
         )
         Spacer(modifier = modifier.height(5.dp))
         PasswordTextField(
-            onValueChange = {},
-            value = "",
+            value = confirmedPassword,
+            onValueChange = { newPassword ->
+                viewModel.onConfirmPassword(newPassword)
+            },
             titleContainer = stringResource(R.string.confirme_sua_senha),
             placeholder = stringResource(id = R.string.digite_sua_senha)
         )
@@ -55,7 +68,7 @@ fun ResetPassword(modifier: Modifier = Modifier, navController: NavController) {
             onClick = {
                 navController.navigate(Screens.Login.route)
             },
-            text = stringResource(R.string.resetar_senha),
+            text = stringResource(R.string.redefinir),
             backgroundColor = primary
         )
         Spacer(modifier = Modifier.height(21.dp))

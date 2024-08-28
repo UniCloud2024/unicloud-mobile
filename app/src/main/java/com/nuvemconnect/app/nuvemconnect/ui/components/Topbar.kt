@@ -27,8 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.nuvemconnect.app.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary100
+import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary700
 
 @Composable
 fun TopBar(
@@ -72,8 +74,8 @@ fun TopBar(
         Text(
             text = subtitleText,
             fontSize = subtitleSize,
-            color = Color.Gray,
-            fontFamily = poppinsFontFamily,
+            color = secondary700,
+            fontFamily = dmSansFamily,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Justify,
             modifier = modifier.fillMaxWidth()

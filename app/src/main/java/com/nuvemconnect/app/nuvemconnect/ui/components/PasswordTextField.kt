@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.EmailErrorType
+import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
@@ -52,8 +53,8 @@ fun PasswordTextField(
         Text(
             text = titleContainer,
             fontSize = 16.sp,
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.SemiBold
+            fontFamily = dmSansFamily,
+            fontWeight = FontWeight.Bold
         )
         Spacer(modifier = modifier.height(5.dp))
         OutlinedTextField(
@@ -78,8 +79,8 @@ fun PasswordTextField(
             placeholder = {
                 Text(
                     text = placeholder,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Light,
+                    fontFamily = dmSansFamily,
+                    fontWeight = FontWeight.Normal,
                     maxLines = 1
                 )
             },

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -22,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.model.error.EmailErrorType
+import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.error300
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
@@ -45,8 +47,8 @@ fun CustomTextField(
         Text(
             text = titleContainer,
             fontSize = 16.sp,
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.SemiBold
+            fontFamily = dmSansFamily,
+            fontWeight = FontWeight.Bold
         )
         Spacer(modifier = modifier.height(5.dp))
         OutlinedTextField(
@@ -59,9 +61,10 @@ fun CustomTextField(
             placeholder = {
                 Text(
                     text = placeholder,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Light,
-                    maxLines = 1
+                    fontFamily = dmSansFamily,
+                    fontWeight = FontWeight.Normal,
+                    maxLines = 1,
+                    modifier = modifier.fillMaxWidth()
                 )
             },
             modifier = modifier.fillMaxWidth(),
