@@ -1,6 +1,5 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.login
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,13 +11,13 @@ class LoginViewModel : ViewModel() {
     val name: StateFlow<String> = _name.asStateFlow()
 
     private val _email = MutableStateFlow("")
-    val email: StateFlow<String>  = _email.asStateFlow()
+    val email: StateFlow<String> = _email.asStateFlow()
 
     private val _isUserInteracted = MutableStateFlow(false)
     val isUserInteracted: StateFlow<Boolean> = _isUserInteracted
 
     private val _password = MutableStateFlow("")
-    val password: StateFlow<String>  = _password.asStateFlow()
+    val password: StateFlow<String> = _password.asStateFlow()
 
     private val _confirmPassword = MutableStateFlow("")
     val confirmPassword: StateFlow<String> = _confirmPassword.asStateFlow()
@@ -39,8 +38,5 @@ class LoginViewModel : ViewModel() {
     fun onConfirmPassword(confirmPassword: String) {
         _confirmPassword.value = confirmPassword
     }
-
-
-
 
 }

@@ -39,8 +39,11 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, viewModel: LoginViewModel) {
-
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: LoginViewModel
+) {
 
     val email by viewModel.email.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
@@ -76,14 +79,14 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, vie
             titleContainer = stringResource(R.string.email),
             placeholder = stringResource(id = R.string.digite_seu_email),
             validate = { email ->
-                    validateEmail(email)
+                validateEmail(email)
             },
             isUserInteracted = isUserInteracted
         )
         Spacer(modifier = modifier.height(17.dp))
         PasswordTextField(
             onValueChange = { newPassword ->
-               viewModel.onPasswordChange(newPassword)
+                viewModel.onPasswordChange(newPassword)
             },
             value = password,
             titleContainer = stringResource(R.string.senha),

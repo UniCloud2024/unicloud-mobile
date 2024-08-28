@@ -1,10 +1,8 @@
 package com.nuvemconnect.app.nuvemconnect.ui.components
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -40,8 +38,10 @@ fun CustomButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth().
-        width(328.dp).height(56.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .width(328.dp)
+            .height(56.dp),
         colors = ButtonDefaults.run {
             buttonColors(
                 containerColor = backgroundColor,
@@ -50,7 +50,7 @@ fun CustomButton(
         },
         shape = RoundedCornerShape(20.dp),
         contentPadding = contentPadding,
-        ) {
+    ) {
         Text(
             text = text,
             fontSize = fontSize,
@@ -59,7 +59,7 @@ fun CustomButton(
             fontWeight = fontWeight,
             fontFamily = fontFamily,
 
-        )
+            )
     }
 }
 

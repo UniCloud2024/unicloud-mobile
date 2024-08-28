@@ -27,7 +27,11 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 
 @Composable
-fun RegisterScreen(modifier: Modifier = Modifier, navController: NavController, viewModel: LoginViewModel = viewModel()) {
+fun RegisterScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: LoginViewModel = viewModel()
+) {
 
     val name by viewModel.name.collectAsStateWithLifecycle()
     val email by viewModel.email.collectAsStateWithLifecycle()
@@ -47,29 +51,29 @@ fun RegisterScreen(modifier: Modifier = Modifier, navController: NavController, 
         )
         Spacer(modifier = modifier.height(29.dp))
         CustomTextField(
-            onValueChange = {newEmail ->
+            onValueChange = { newEmail ->
                 viewModel.onEmailChange(newEmail)
             },
             value = email,
             titleContainer = stringResource(id = R.string.email),
             placeholder = stringResource(id = R.string.digite_seu_email),
-            validate = { EmailErrorType.Empty},
+            validate = { EmailErrorType.Empty },
             isUserInteracted = false
         )
         Spacer(modifier = modifier.height(17.dp))
         CustomTextField(
-            onValueChange = {newName ->
+            onValueChange = { newName ->
                 viewModel.onName(newName)
             },
             value = name,
             titleContainer = stringResource(R.string.nome_do_usuario),
             placeholder = stringResource(R.string.digite_seu_nome),
-            validate = { EmailErrorType.Empty},
+            validate = { EmailErrorType.Empty },
             isUserInteracted = false
         )
         Spacer(modifier = modifier.height(17.dp))
         PasswordTextField(
-            onValueChange = {newPassword ->
+            onValueChange = { newPassword ->
                 viewModel.onPasswordChange(newPassword)
             },
             value = password,
@@ -78,11 +82,11 @@ fun RegisterScreen(modifier: Modifier = Modifier, navController: NavController, 
         )
         Spacer(modifier = modifier.height(17.dp))
         PasswordTextField(
-            onValueChange = {newConfirmPassword ->
+            onValueChange = { newConfirmPassword ->
                 viewModel.onConfirmPassword(newConfirmPassword)
             },
             value = confirmPassword,
-            titleContainer = stringResource(id =R.string.confirme_sua_senha),
+            titleContainer = stringResource(id = R.string.confirme_sua_senha),
             placeholder = stringResource(id = R.string.digite_sua_senha)
         )
         Spacer(modifier = modifier.height(35.dp))

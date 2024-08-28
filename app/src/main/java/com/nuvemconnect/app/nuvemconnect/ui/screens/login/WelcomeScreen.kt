@@ -30,7 +30,6 @@ import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary300
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary600
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary950
