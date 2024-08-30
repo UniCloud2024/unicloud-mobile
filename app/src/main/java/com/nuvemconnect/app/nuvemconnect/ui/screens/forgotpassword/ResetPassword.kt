@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
@@ -27,10 +28,14 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 fun ResetPassword(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+
 ) {
     val password by viewModel.password.collectAsStateWithLifecycle()
     val confirmedPassword by viewModel.confirmPassword.collectAsStateWithLifecycle()
+   val isUserInteracted by viewModel.isUserInteracted.collectAsStateWithLifecycle()
+
+
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = modifier.padding(top = 36.dp, start = 16.dp, end = 16.dp)
@@ -48,10 +53,15 @@ fun ResetPassword(
         PasswordTextField(
             value = password,
             onValueChange = { newPassword ->
-                viewModel.onPasswordChange(newPassword)
+                viewModel.onPasswordChange(newPassword  )
+
             },
             titleContainer = stringResource(R.string.senha),
-            placeholder = stringResource(R.string.digite_sua_senha)
+            placeholder = stringResource(R.string.digite_sua_senha),
+            validate = { password ->
+                validatePassword(password)
+            },
+            isUserInteracted = isUserInteracted,
         )
         Spacer(modifier = modifier.height(5.dp))
         PasswordTextField(
@@ -60,11 +70,14 @@ fun ResetPassword(
                 viewModel.onConfirmPassword(newPassword)
             },
             titleContainer = stringResource(R.string.confirme_sua_senha),
-            placeholder = stringResource(id = R.string.digite_sua_senha)
+            placeholder = stringResource(id = R.string.digite_sua_senha),
+            isUserInteracted = isUserInteracted,
+            validate = {
+                validatePassword(password)
+            }
         )
         Spacer(modifier = modifier.height(26.dp))
         CustomButton(
-
             onClick = {
                 navController.navigate(Screens.Login.route)
             },
@@ -74,10 +87,17 @@ fun ResetPassword(
         Spacer(modifier = Modifier.height(21.dp))
     }
 }
+fun validatePassword(password: String): PasswordErrorType {
+    return when {
+        password.isEmpty() -> PasswordErrorType.Empty
+        password.length < 8 -> PasswordErrorType.rulePassword
+        else -> PasswordErrorType.None
+    }
+}
 
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ResetPasswordPreview() {
-    ResetPassword(navController = rememberNavController())
+    ResetPassword(navController = rememberNavController(),)
 }

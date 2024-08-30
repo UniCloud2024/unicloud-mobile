@@ -33,10 +33,12 @@ class LoginViewModel : ViewModel() {
 
     fun onPasswordChange(newPassword: String) {
         _password.value = newPassword
+        _isUserInteracted.value = true
     }
 
     fun onConfirmPassword(confirmPassword: String) {
         _confirmPassword.value = confirmPassword
+        _isUserInteracted.value = true
     }
 
 }

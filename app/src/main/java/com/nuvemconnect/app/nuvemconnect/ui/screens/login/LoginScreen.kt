@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.EmailErrorType
+import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
@@ -42,7 +43,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
 fun LoginScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: LoginViewModel
+    viewModel: LoginViewModel,
 ) {
 
     val email by viewModel.email.collectAsStateWithLifecycle()
@@ -91,6 +92,11 @@ fun LoginScreen(
             value = password,
             titleContainer = stringResource(R.string.senha),
             placeholder = stringResource(R.string.digite_sua_senha),
+            validate = { password ->
+                validatePassword(password)
+
+            },
+            isUserInteracted = isUserInteracted
         )
         Spacer(modifier = modifier.height(26.dp))
         Text(
@@ -108,7 +114,12 @@ fun LoginScreen(
         )
         Spacer(modifier = modifier.height(26.dp))
         CustomButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                    viewModel.onEmailChange(email)
+                    validateEmail(email)
+                    /*navController.navigate(Screens.Home.route)*/
+
+            },
             text = "Entrar",
             modifier = modifier.fillMaxWidth(),
             backgroundColor = primary,
@@ -174,6 +185,15 @@ fun validateEmail(email: String): EmailErrorType {
         else -> EmailErrorType.None
     }
 }
+
+fun validatePassword(password: String): PasswordErrorType {
+    return when {
+        password.isEmpty() -> PasswordErrorType.Empty
+        password.length < 8 -> PasswordErrorType.minimumPassword
+        else -> PasswordErrorType.None
+    }
+}
+
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
