@@ -1,18 +1,25 @@
 package com.nuvemconnect.app.nuvemconnect.ui.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,49 +27,71 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nuvemconnect.app.nuvemconnect.ui.theme.button_color
-import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary200
+import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary700
 
 @Composable
 fun CodeNumberField(
     modifier: Modifier = Modifier,
-    value: Int = 0
 ) {
-    var number by remember {
-        mutableIntStateOf(value)
+    var otpText by remember {
+        mutableStateOf("")
     }
 
-
-    OutlinedTextField(
-        value = number.toString(),
-        onValueChange = { newNumber ->
-            number = newNumber.toInt()
+    BasicTextField(
+        value = otpText,
+        onValueChange = {
+            if (it.length <= 6) {
+                otpText = it
+            }
         },
-        textStyle = LocalTextStyle.current.copy(
-            fontSize = 14.sp,
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-
-        ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
         ),
-        shape = RoundedCornerShape(8),
-
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = button_color
-
-        ),
-        modifier = modifier
-            .width(41.dp)
-            .height(46.dp),
-        singleLine = true,
+        decorationBox = {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                repeat(6) { index ->
+                    val char = when {
+                        index >= otpText.length -> ""
+                        else -> otpText[index].toString()
+                    }
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .width(41.dp)
+                            .height(46.dp)
+                            .background(
+                                color = secondary200,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = if (index == otpText.length) secondary700 else Color.Transparent,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                    ) {
+                        Text(
+                            text = char,
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp,
+                            lineHeight = 45.sp,
+                            fontFamily = dmSansFamily,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+                    Spacer(modifier = modifier.width(6.dp))
+                }
+            }
+        }
     )
 }
 
-@Preview(showSystemUi = false, showBackground = true)
+@Preview(showBackground = true, showSystemUi = false)
 @Composable
 private fun CodeNumberFieldPreview() {
     CodeNumberField()

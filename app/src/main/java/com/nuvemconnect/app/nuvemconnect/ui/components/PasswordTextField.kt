@@ -27,6 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
+import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.error300
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
@@ -38,8 +41,11 @@ fun PasswordTextField(
     value: String,
     titleContainer: String,
     placeholder: String,
+    validate: (String) -> PasswordErrorType,
+    isUserInteracted: Boolean
 ) {
-    var passwordVisibility by rememberSaveable { mutableStateOf(true) }
+    var passwordVisibility by rememberSaveable { mutableStateOf(false) }
+    val error = if (isUserInteracted) validate(value) else PasswordErrorType.None
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -48,8 +54,8 @@ fun PasswordTextField(
         Text(
             text = titleContainer,
             fontSize = 16.sp,
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.SemiBold
+            fontFamily = dmSansFamily,
+            fontWeight = FontWeight.Bold
         )
         Spacer(modifier = modifier.height(5.dp))
         OutlinedTextField(
@@ -74,8 +80,9 @@ fun PasswordTextField(
             placeholder = {
                 Text(
                     text = placeholder,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Light
+                    fontFamily = dmSansFamily,
+                    fontWeight = FontWeight.Normal,
+                    maxLines = 1
                 )
             },
             modifier = modifier.fillMaxWidth(),
@@ -86,12 +93,20 @@ fun PasswordTextField(
                 focusedBorderColor = primary,
                 focusedTextColor = Color.Black,
                 unfocusedContainerColor = mediumGray,
-
                 ),
-
+            isError = error != PasswordErrorType.None
             )
+        if (error != PasswordErrorType.None)  {
+            Text(
+                text = error.message,
+                color = error300,
+                fontSize = 12.sp,
+                fontFamily = poppinsFontFamily
+            )
+        }
     }
 }
+
 
 @Preview(showSystemUi = false, showBackground = true)
 @Composable
@@ -99,11 +114,13 @@ private fun CustomTextFieldPreview() {
     val value by rememberSaveable {
         mutableStateOf("")
     }
-    CustomTextField(
+    PasswordTextField(
         onValueChange = {},
         value = value,
         titleContainer = "Titulo do container",
-        placeholder = "Descrição do texto"
+        placeholder = "Descrição do texto",
+        isUserInteracted = false,
+        validate = {PasswordErrorType.rulePassword}
     )
 
 }
