@@ -31,7 +31,7 @@
     <string name="subtitle_login_screen">Para começar, faça login em sua conta</string>
     <string name="insira_suas_informacoes_pessoais">Insira suas informações pessoais</string>
 
-    <string name="ou_faca_seu_login">" Ou faça seu login "</string>
+    <string name="ou_faca_seu_login">" ou "</string>
     <string name="nao_tem_uma_conta">"Não tem uma conta "</string>
 
     <string name="nome_do_usuario">Nome</string>

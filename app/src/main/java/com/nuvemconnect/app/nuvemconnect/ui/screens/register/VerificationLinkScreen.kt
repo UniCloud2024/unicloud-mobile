@@ -28,9 +28,9 @@ import coil.size.Size
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
 import com.nuvemconnect.app.nuvemconnect.ui.theme.NuvemConnectTheme
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral100
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
-import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary700
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
 fun VerificationLinkScreen(
@@ -67,7 +67,7 @@ fun VerificationLinkScreen(
             fontFamily = dmSansFamily,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center,
-            color = secondary700
+            color = neutral100
         )
         Spacer(modifier = modifier.height(30.dp))
         AsyncImage(
@@ -85,13 +85,16 @@ fun VerificationLinkScreen(
             Text(
                 text = "Não recebeu o email? ",
                 fontFamily = dmSansFamily,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+                color = neutral100
             )
             Text(
                 text = "enviar novamente",
                 fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Normal,
-                color = primary
+                color = primary100,
+                fontSize = 16.sp
             )
         }
     }

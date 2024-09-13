@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,9 +27,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral100
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary100
-import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary700
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral60
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral70
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral700
+import com.nuvemconnect.app.nuvemconnect.ui.theme.white_two
 
 @Composable
 fun TopBar(
@@ -48,23 +51,24 @@ fun TopBar(
             .fillMaxWidth()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.baseline_chevron_left_24),
+            painter = painterResource(id = R.drawable.baseline_arrow_back_24),
             contentDescription = stringResource(id = R.string.voltar),
             modifier = modifier
-                .clip(RoundedCornerShape(6.dp))
-                .width(46.dp)
-                .height(46.dp)
-                .background(secondary100)
+                .clip(CircleShape)
+                .width(36.dp)
+                .height(36.dp)
+                .background(white_two)
                 .clickable {
                     onBackClick?.invoke() ?: navController.navigateUp()
                 },
-            contentScale = ContentScale.Crop,
+           contentScale = ContentScale.Inside
         )
 
         Spacer(modifier = modifier.height(30.dp))
         Text(
             text = headingTitle,
             fontSize = headingSize,
+            color = neutral100,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Bold,
             modifier = modifier.fillMaxWidth()
@@ -73,7 +77,7 @@ fun TopBar(
         Text(
             text = subtitleText,
             fontSize = subtitleSize,
-            color = secondary700,
+            color = neutral70,
             fontFamily = dmSansFamily,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Justify,

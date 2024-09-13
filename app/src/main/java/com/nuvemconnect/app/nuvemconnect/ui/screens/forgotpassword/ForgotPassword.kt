@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,8 +33,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validateEmail
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary600
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 
 @Composable
@@ -65,8 +65,8 @@ fun ForgotPassword(
                 viewModel.onEmailChange(newEmail)
                 validateEmail(email)
             },
-            titleContainer = stringResource(R.string.digite_seu_email),
             placeholder = stringResource(R.string.digite_seu_email),
+            leadingIcon = painterResource(id = R.drawable.baseline_mail_outline_24),
             validate = { email ->
                 validateEmail(email)
             },
@@ -78,7 +78,7 @@ fun ForgotPassword(
                 navController.navigate(Screens.PasswordCode.route)
             },
             text = stringResource(R.string.enviar_codigo),
-            backgroundColor = primary,
+            backgroundColor = primary100,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.SemiBold
         )
@@ -96,7 +96,7 @@ fun ForgotPassword(
             )
             Text(
                 text = stringResource(R.string.fazer_login),
-                color = primary600,
+                color = primary100,
                 fontSize = 16.sp,
                 fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Normal,
