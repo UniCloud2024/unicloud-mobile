@@ -22,7 +22,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
 fun ResetPassword(
@@ -49,40 +49,38 @@ fun ResetPassword(
             navController = navController,
             onBackClick = { navController.navigateUp() }
         )
-        Spacer(modifier = modifier.height(45.dp))
+        Spacer(modifier = modifier.height(68.dp))
         PasswordTextField(
-            value = password,
             onValueChange = { newPassword ->
                 viewModel.onPasswordChange(newPassword  )
 
             },
-            titleContainer = stringResource(R.string.senha),
+            value = password,
             placeholder = stringResource(R.string.digite_sua_senha),
             validate = { password ->
                 validatePassword(password)
             },
             isUserInteracted = isUserInteracted,
         )
-        Spacer(modifier = modifier.height(5.dp))
+        Spacer(modifier = modifier.height(30.dp))
         PasswordTextField(
-            value = confirmedPassword,
             onValueChange = { newPassword ->
                 viewModel.onConfirmPassword(newPassword)
             },
-            titleContainer = stringResource(R.string.confirme_sua_senha),
-            placeholder = stringResource(id = R.string.digite_sua_senha),
-            isUserInteracted = isUserInteracted,
+            value = confirmedPassword,
+            placeholder = stringResource(id = R.string.confirme_sua_senha),
             validate = {
                 validatePassword(password)
-            }
+            },
+            isUserInteracted = isUserInteracted
         )
-        Spacer(modifier = modifier.height(26.dp))
+        Spacer(modifier = modifier.height(40.dp))
         CustomButton(
             onClick = {
                 navController.navigate(Screens.Login.route)
             },
             text = stringResource(R.string.redefinir),
-            backgroundColor = primary
+            backgroundColor = primary100
         )
         Spacer(modifier = Modifier.height(21.dp))
     }

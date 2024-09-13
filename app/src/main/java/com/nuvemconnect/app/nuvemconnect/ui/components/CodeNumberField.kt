@@ -28,8 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary200
-import com.nuvemconnect.app.nuvemconnect.ui.theme.secondary700
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import com.nuvemconnect.app.nuvemconnect.ui.theme.white_two
 
 @Composable
 fun CodeNumberField(
@@ -66,12 +66,12 @@ fun CodeNumberField(
                             .width(41.dp)
                             .height(46.dp)
                             .background(
-                                color = secondary200,
+                                color = white_two,
                                 shape = RoundedCornerShape(8.dp)
                             )
                             .border(
                                 width = 1.dp,
-                                color = if (index == otpText.length) secondary700 else Color.Transparent,
+                                color = if (index == otpText.length) primary100 else Color.Transparent,
                                 shape = RoundedCornerShape(8.dp)
                             )
                     ) {

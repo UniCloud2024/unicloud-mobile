@@ -1,5 +1,6 @@
 package com.nuvemconnect.app.nuvemconnect.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,7 +24,6 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 
 @Composable
 fun CustomButton(
-
     modifier: Modifier = Modifier,
     text: String,
     fontFamily: FontFamily = poppinsFontFamily,
@@ -33,6 +33,7 @@ fun CustomButton(
     contentPadding: PaddingValues = PaddingValues(16.dp),
     textColor: Color = MaterialTheme.colorScheme.surface,
     fontSize: TextUnit = 18.sp,
+    border: BorderStroke? = null,
     fontWeight: FontWeight = FontWeight.SemiBold,
     onClick: () -> Unit,
 ) {
@@ -48,7 +49,8 @@ fun CustomButton(
                 contentColor = contentColor
             )
         },
-        shape = RoundedCornerShape(20.dp),
+        border = border,
+        shape = RoundedCornerShape(100.dp),
         contentPadding = contentPadding,
     ) {
         Text(

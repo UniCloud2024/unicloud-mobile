@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,9 @@ import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validateEmail
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validatePassword
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
+import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary60
 
 @Composable
 fun RegisterScreen(
@@ -59,8 +62,8 @@ fun RegisterScreen(
                 viewModel.onEmailChange(newEmail)
             },
             value = email,
-            titleContainer = stringResource(id = R.string.email),
-            placeholder = stringResource(id = R.string.digite_seu_email),
+            leadingIcon = painterResource(id = R.drawable.baseline_mail_outline_24),
+            placeholder = stringResource(id = R.string.email),
             validate = {
                 validateEmail(email)
             },
@@ -71,9 +74,9 @@ fun RegisterScreen(
             onValueChange = { newName ->
                 viewModel.onName(newName)
             },
+            leadingIcon = painterResource(id = R.drawable.baseline_user_01),
             value = name,
-            titleContainer = stringResource(R.string.nome_do_usuario),
-            placeholder = stringResource(R.string.digite_seu_nome),
+            placeholder = stringResource(R.string.nome_do_usuario),
             validate = { validateEmail(name) }, /* TODO: ajuda para a validação do nome e não do tipo Email*/
             isUserInteracted = false
         )
@@ -83,7 +86,6 @@ fun RegisterScreen(
                 viewModel.onPasswordChange(newPassword)
             },
             value = password,
-            titleContainer = stringResource(id = R.string.senha),
             placeholder = stringResource(id = R.string.digite_sua_senha),
             validate = { password ->
                 validatePassword(password)
@@ -96,8 +98,7 @@ fun RegisterScreen(
                 viewModel.onConfirmPassword(newConfirmPassword)
             },
             value = confirmPassword,
-            titleContainer = stringResource(id = R.string.confirme_sua_senha),
-            placeholder = stringResource(id = R.string.digite_sua_senha),
+            placeholder = stringResource(id = R.string.confirme_sua_senha),
             validate = { confirmedPassword ->
                 validatePassword(confirmedPassword)
             },
@@ -109,8 +110,9 @@ fun RegisterScreen(
                 navController.navigate(Screens.VerificationLink.route)
 
             }, text = stringResource(R.string.registrar),
-            backgroundColor = primary,
-            fontSize = 18.sp
+            backgroundColor = primary100,
+            fontSize = 18.sp,
+            fontFamily = dmSansFamily
         )
     }
 }

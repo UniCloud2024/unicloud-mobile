@@ -18,7 +18,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -29,17 +31,15 @@ import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.error300
-import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
+import com.nuvemconnect.app.nuvemconnect.ui.theme.error100
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
+import com.nuvemconnect.app.nuvemconnect.ui.theme.white_two
 
 @Composable
 fun PasswordTextField(
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
     value: String,
-    titleContainer: String,
     placeholder: String,
     validate: (String) -> PasswordErrorType,
     isUserInteracted: Boolean
@@ -49,24 +49,24 @@ fun PasswordTextField(
 
     Column(
         modifier = Modifier.fillMaxWidth()
-
     ) {
-        Text(
-            text = titleContainer,
-            fontSize = 16.sp,
-            fontFamily = dmSansFamily,
-            fontWeight = FontWeight.Bold
-        )
+
         Spacer(modifier = modifier.height(5.dp))
         OutlinedTextField(
             value = value,
             onValueChange = { newValue ->
                 if (newValue.length <= 40) onValueChange(newValue)
             },
+            leadingIcon = {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_lock_outline),
+                    contentDescription = "Icone de senha"
+                )
+            },
             trailingIcon = {
                 val image =
-                    if (passwordVisibility) painterResource(id = R.drawable.baseline_visibility_24) else painterResource(
-                        id = R.drawable.baseline_visibility_off_24
+                    if (passwordVisibility) painterResource(id = R.drawable.outline_visibility_24) else painterResource(
+                        id = R.drawable.outline_visibility_off_24
                     )
                 val description = if (passwordVisibility) "Hide password" else "Show password"
 
@@ -89,17 +89,17 @@ fun PasswordTextField(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
             shape = RoundedCornerShape(8),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = mediumGray,
-                focusedBorderColor = primary,
+                unfocusedBorderColor = white_two,
+                focusedBorderColor = white_two,
                 focusedTextColor = Color.Black,
-                unfocusedContainerColor = mediumGray,
-                ),
+                unfocusedContainerColor = white_two,
+            ),
             isError = error != PasswordErrorType.None
-            )
-        if (error != PasswordErrorType.None)  {
+        )
+        if (error != PasswordErrorType.None) {
             Text(
                 text = error.message,
-                color = error300,
+                color = error100,
                 fontSize = 12.sp,
                 fontFamily = poppinsFontFamily
             )
@@ -117,10 +117,9 @@ private fun CustomTextFieldPreview() {
     PasswordTextField(
         onValueChange = {},
         value = value,
-        titleContainer = "Titulo do container",
         placeholder = "Descrição do texto",
-        isUserInteracted = false,
-        validate = {PasswordErrorType.rulePassword}
+        validate = { PasswordErrorType.rulePassword },
+        isUserInteracted = false
     )
 
 }

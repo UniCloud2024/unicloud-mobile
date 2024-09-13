@@ -22,7 +22,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.components.CodeNumberField
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
 fun PasswordCode(modifier: Modifier = Modifier, navController: NavController) {
@@ -52,7 +52,7 @@ fun PasswordCode(modifier: Modifier = Modifier, navController: NavController) {
                 navController.navigate(Screens.ResetPassword.route)
             },
             text = stringResource(R.string.verificar),
-            backgroundColor = primary,
+            backgroundColor = primary100,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Normal
         )

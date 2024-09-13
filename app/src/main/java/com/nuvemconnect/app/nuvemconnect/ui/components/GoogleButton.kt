@@ -34,7 +34,7 @@ fun GoogleButton(
     textStyle: TextStyle = MaterialTheme.typography.titleLarge,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     textColor: Color = MaterialTheme.colorScheme.surface,
-    fontSize: TextUnit = 16.sp,
+    fontSize: TextUnit = 18.sp,
     border: BorderStroke? = null,
     fontWeight: FontWeight = FontWeight.SemiBold
 ) {
@@ -49,7 +49,7 @@ fun GoogleButton(
             )
 
         },
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(100.dp),
         contentPadding = contentPadding,
     ) {
         Icon(

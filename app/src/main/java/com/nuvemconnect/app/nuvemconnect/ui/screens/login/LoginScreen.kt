@@ -17,9 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,8 +36,11 @@ import com.nuvemconnect.app.nuvemconnect.ui.components.GoogleButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.mediumGray
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral100
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral60
+import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral70
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary
+import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
 fun LoginScreen(
@@ -61,7 +64,8 @@ fun LoginScreen(
             text = stringResource(R.string.title_login_screen),
             fontSize = 28.sp,
             fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            color = neutral100
         )
         Spacer(modifier = modifier.height(21.dp))
         Text(
@@ -69,7 +73,7 @@ fun LoginScreen(
             fontSize = 16.sp,
             fontFamily = dmSansFamily,
             fontWeight = FontWeight.Normal,
-            color = Color.Gray
+            color = neutral70
         )
         Spacer(modifier = modifier.height(52.dp))
         CustomTextField(
@@ -77,8 +81,8 @@ fun LoginScreen(
             onValueChange = { newEmail ->
                 viewModel.onEmailChange(newEmail)
             },
-            titleContainer = stringResource(R.string.email),
-            placeholder = stringResource(id = R.string.digite_seu_email),
+            leadingIcon = painterResource(id = R.drawable.baseline_mail_outline_24),
+            placeholder = stringResource(id = R.string.email),
             validate = { email ->
                 validateEmail(email)
             },
@@ -90,8 +94,7 @@ fun LoginScreen(
                 viewModel.onPasswordChange(newPassword)
             },
             value = password,
-            titleContainer = stringResource(R.string.senha),
-            placeholder = stringResource(R.string.digite_sua_senha),
+            placeholder = stringResource(R.string.senha),
             validate = { password ->
                 validatePassword(password)
 
@@ -101,7 +104,7 @@ fun LoginScreen(
         Spacer(modifier = modifier.height(26.dp))
         Text(
             text = stringResource(R.string.esqueceu_sua_senha),
-            color = primary,
+            color = primary100,
             modifier = modifier
                 .align(Alignment.End)
                 .clickable {
@@ -110,9 +113,8 @@ fun LoginScreen(
                 .padding(top = 10.dp),
             fontSize = 16.sp,
             fontFamily = dmSansFamily,
-            textDecoration = TextDecoration.Underline
         )
-        Spacer(modifier = modifier.height(26.dp))
+        Spacer(modifier = modifier.height(66.dp))
         CustomButton(
             onClick = {
                     viewModel.onEmailChange(email)
@@ -122,10 +124,10 @@ fun LoginScreen(
             },
             text = "Entrar",
             modifier = modifier.fillMaxWidth(),
-            backgroundColor = primary,
-            fontWeight = FontWeight.Bold
+            backgroundColor = primary100,
+            fontWeight = FontWeight.SemiBold
         )
-        Spacer(modifier = modifier.height(40.dp))
+        Spacer(modifier = modifier.height(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier.fillMaxWidth()
@@ -146,10 +148,10 @@ fun LoginScreen(
                 modifier = modifier.weight(1f)
             )
         }
-        Spacer(modifier = modifier.height(17.dp))
+        Spacer(modifier = modifier.height(16.dp))
         GoogleButton(
             onClick = { /*TODO*/ },
-            text = "Google",
+            text = "Entrar com Google",
             backgroundColor = Color.Transparent,
             textColor = Color.Black,
             contentColor = Color.Gray,
@@ -159,17 +161,17 @@ fun LoginScreen(
         Row {
             Text(
                 text = stringResource(R.string.nao_tem_uma_conta),
-                color = Color.Gray,
+                color = neutral60,
                 fontSize = 16.sp,
                 fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Normal
             )
             Text(
                 text = stringResource(R.string.inscreva_se),
-                color = primary,
+                color = primary100,
                 fontSize = 16.sp,
                 fontFamily = dmSansFamily,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Normal,
                 modifier = Modifier.clickable {
                     navController.navigate(Screens.Register.route)
                 }
