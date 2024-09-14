@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.authGraph
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.home.homeGraph
-import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.splashScreen
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
