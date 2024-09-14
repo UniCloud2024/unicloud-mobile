@@ -19,7 +19,11 @@ fun SplashScreen(modifier: Modifier = Modifier, navigateToWelcome: () -> Unit) {
     LaunchedEffect(key1 = Unit) {
         delay(1000)
         navigateToWelcome()
-        // TODO: substituir o navigateToWelcome() por logica: 'se logado -> homeScreen; else -> welcomeScreen'
+        /* TODO: substituir a 'navegacao fixa' do navigateToWelcome() por logica:
+            'when(isUserAuthenticated){
+            true -> Graph.HomeGraph.route
+            false -> Graph.AuthGraph.route
+         */
     }
 
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
