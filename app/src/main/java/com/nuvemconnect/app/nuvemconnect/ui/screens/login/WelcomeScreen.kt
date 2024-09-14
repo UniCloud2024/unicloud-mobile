@@ -31,7 +31,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
-import com.nuvemconnect.app.nuvemconnect.navigation.Screens
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToLogin
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToRegister
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.theme.base_white
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
@@ -77,7 +78,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                 modifier = modifier
                     .fillMaxWidth(),
                 onClick = {
-                    navController.navigate(Screens.Login.route)
+                    navController.navigateToLogin()
                 },
                 text = "Login",
                 fontFamily = dmSansFamily,
@@ -91,7 +92,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                     .fillMaxWidth()
                     .padding(top = 16.dp),
                 onClick = {
-                    navController.navigate(Screens.Register.route)
+                    navController.navigateToRegister()
                 },
                 text = "Registre-se",
                 backgroundColor = Color.Transparent,
