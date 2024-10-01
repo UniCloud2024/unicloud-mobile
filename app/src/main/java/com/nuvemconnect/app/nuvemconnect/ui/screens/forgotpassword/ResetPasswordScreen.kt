@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
-import com.nuvemconnect.app.nuvemconnect.navigation.Screens
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToLogin
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
@@ -25,7 +25,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
-fun ResetPassword(
+fun ResetPasswordScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
@@ -77,7 +77,7 @@ fun ResetPassword(
         Spacer(modifier = modifier.height(40.dp))
         CustomButton(
             onClick = {
-                navController.navigate(Screens.Login.route)
+                navController.navigateToLogin()
             },
             text = stringResource(R.string.redefinir),
             backgroundColor = primary100
@@ -97,5 +97,5 @@ fun validatePassword(password: String): PasswordErrorType {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ResetPasswordPreview() {
-    ResetPassword(navController = rememberNavController(),)
+    ResetPasswordScreen(navController = rememberNavController(),)
 }

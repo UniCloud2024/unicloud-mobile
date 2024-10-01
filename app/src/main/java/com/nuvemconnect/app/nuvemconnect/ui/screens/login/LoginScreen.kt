@@ -30,6 +30,7 @@ import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.EmailErrorType
 import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToForgotPasswordScreen
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.GoogleButton
@@ -108,7 +109,7 @@ fun LoginScreen(
             modifier = modifier
                 .align(Alignment.End)
                 .clickable {
-                    navController.navigate(Screens.Password.route)
+                    navController.navigateToForgotPasswordScreen()
                 }
                 .padding(top = 10.dp),
             fontSize = 16.sp,

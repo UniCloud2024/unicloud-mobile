@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
-import com.nuvemconnect.app.nuvemconnect.navigation.Screens
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToResetPassword
 import com.nuvemconnect.app.nuvemconnect.ui.components.CodeNumberField
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
@@ -25,7 +25,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
-fun PasswordCode(modifier: Modifier = Modifier, navController: NavController) {
+fun VerificationCodeScreen(modifier: Modifier = Modifier, navController: NavController) {
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -49,7 +49,7 @@ fun PasswordCode(modifier: Modifier = Modifier, navController: NavController) {
         Spacer(modifier = modifier.height(34.dp))
         CustomButton(
             onClick = {
-                navController.navigate(Screens.ResetPassword.route)
+                navController.navigateToResetPassword()
             },
             text = stringResource(R.string.verificar),
             backgroundColor = primary100,
@@ -63,6 +63,6 @@ fun PasswordCode(modifier: Modifier = Modifier, navController: NavController) {
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-private fun PasswordCodePreview() {
-    PasswordCode(navController = rememberNavController())
+private fun VerificationCodePreview() {
+    VerificationCodeScreen(navController = rememberNavController())
 }

@@ -15,10 +15,15 @@ import com.nuvemconnect.app.nuvemconnect.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(modifier: Modifier = Modifier, navigateToLogin: () -> Unit) {
+fun SplashScreen(modifier: Modifier = Modifier, navigateToWelcome: () -> Unit) {
     LaunchedEffect(key1 = Unit) {
         delay(1000)
-        navigateToLogin()
+        navigateToWelcome()
+        /* TODO: substituir a 'navegacao fixa' do navigateToWelcome() por logica:
+            'when(isUserAuthenticated){
+            true -> Graph.HomeGraph.route
+            false -> Graph.AuthGraph.route
+         */
     }
 
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToVerificationCode
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
@@ -37,7 +38,7 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 
 @Composable
-fun ForgotPassword(
+fun ForgotPasswordScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
@@ -75,7 +76,7 @@ fun ForgotPassword(
         Spacer(modifier = modifier.height(26.dp))
         CustomButton(
             onClick = {
-                navController.navigate(Screens.PasswordCode.route)
+                navController.navigateToVerificationCode()
             },
             text = stringResource(R.string.enviar_codigo),
             backgroundColor = primary100,
@@ -111,5 +112,5 @@ fun ForgotPassword(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ForgotPasswordPreview() {
-    ForgotPassword(Modifier, rememberNavController())
+    ForgotPasswordScreen(Modifier, rememberNavController())
 }

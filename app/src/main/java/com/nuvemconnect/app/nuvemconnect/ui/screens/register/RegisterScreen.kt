@@ -19,7 +19,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.NameErrorType
-import com.nuvemconnect.app.nuvemconnect.navigation.Screens
+import com.nuvemconnect.app.nuvemconnect.navigation.navigateBack
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToVerificationLink
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
@@ -29,7 +30,6 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validateEmail
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validatePassword
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
-import com.nuvemconnect.app.nuvemconnect.ui.theme.primary60
 
 @Composable
 fun RegisterScreen(
@@ -54,7 +54,7 @@ fun RegisterScreen(
             headingTitle = stringResource(R.string.registre_se),
             subtitleText = stringResource(R.string.insira_suas_informacoes_pessoais),
             navController = navController,
-            onBackClick = { navController.navigateUp() }
+            onBackClick = { navController.navigateBack() }
         )
         Spacer(modifier = modifier.height(29.dp))
         CustomTextField(
@@ -107,7 +107,7 @@ fun RegisterScreen(
         Spacer(modifier = modifier.height(35.dp))
         CustomButton(
             onClick = {
-                navController.navigate(Screens.VerificationLink.route)
+                navController.navigateToVerificationLink()
 
             }, text = stringResource(R.string.registrar),
             backgroundColor = primary100,
