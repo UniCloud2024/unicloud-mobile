@@ -49,16 +49,16 @@ fun LoginScreen(
     navController: NavController,
     viewModel: LoginViewModel,
 ) {
-
     val email by viewModel.email.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
     val isUserInteracted by viewModel.isUserInteracted.collectAsStateWithLifecycle()
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = modifier.height(90.dp))
         Text(
@@ -66,7 +66,7 @@ fun LoginScreen(
             fontSize = 28.sp,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.ExtraBold,
-            color = neutral100
+            color = neutral100,
         )
         Spacer(modifier = modifier.height(21.dp))
         Text(
@@ -74,7 +74,7 @@ fun LoginScreen(
             fontSize = 16.sp,
             fontFamily = dmSansFamily,
             fontWeight = FontWeight.Normal,
-            color = neutral70
+            color = neutral70,
         )
         Spacer(modifier = modifier.height(52.dp))
         CustomTextField(
@@ -87,7 +87,7 @@ fun LoginScreen(
             validate = { email ->
                 validateEmail(email)
             },
-            isUserInteracted = isUserInteracted
+            isUserInteracted = isUserInteracted,
         )
         Spacer(modifier = modifier.height(17.dp))
         PasswordTextField(
@@ -98,55 +98,54 @@ fun LoginScreen(
             placeholder = stringResource(R.string.senha),
             validate = { password ->
                 validatePassword(password)
-
             },
-            isUserInteracted = isUserInteracted
+            isUserInteracted = isUserInteracted,
         )
         Spacer(modifier = modifier.height(26.dp))
         Text(
             text = stringResource(R.string.esqueceu_sua_senha),
             color = primary100,
-            modifier = modifier
-                .align(Alignment.End)
-                .clickable {
-                    navController.navigateToForgotPasswordScreen()
-                }
-                .padding(top = 10.dp),
+            modifier =
+                modifier
+                    .align(Alignment.End)
+                    .clickable {
+                        navController.navigateToForgotPasswordScreen()
+                    }.padding(top = 10.dp),
             fontSize = 16.sp,
             fontFamily = dmSansFamily,
         )
         Spacer(modifier = modifier.height(66.dp))
         CustomButton(
             onClick = {
-                    viewModel.onEmailChange(email)
-                    validateEmail(email)
-                    /*navController.navigate(Screens.Home.route)*/
-
+                viewModel.onEmailChange(email)
+                validateEmail(email)
+                // TODO: rodar viewModel.onLoginClick() se validacao for correta
+                // navController.navigate(Screens.Home.route)
             },
             text = "Entrar",
             modifier = modifier.fillMaxWidth(),
             backgroundColor = primary100,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
         )
         Spacer(modifier = modifier.height(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier.fillMaxWidth(),
         ) {
             HorizontalDivider(
                 thickness = 1.dp,
-                modifier = modifier.weight(1f)
+                modifier = modifier.weight(1f),
             )
             Text(
                 text = stringResource(R.string.ou_faca_seu_login),
                 fontSize = 14.sp,
                 fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Normal,
-                color = Color.Gray
+                color = Color.Gray,
             )
             HorizontalDivider(
                 thickness = 1.dp,
-                modifier = modifier.weight(1f)
+                modifier = modifier.weight(1f),
             )
         }
         Spacer(modifier = modifier.height(16.dp))
@@ -156,7 +155,7 @@ fun LoginScreen(
             backgroundColor = Color.Transparent,
             textColor = Color.Black,
             contentColor = Color.Gray,
-            border = BorderStroke(2.dp, mediumGray)
+            border = BorderStroke(2.dp, mediumGray),
         )
         Spacer(modifier = modifier.height(30.dp))
         Row {
@@ -165,7 +164,7 @@ fun LoginScreen(
                 color = neutral60,
                 fontSize = 16.sp,
                 fontFamily = dmSansFamily,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
             )
             Text(
                 text = stringResource(R.string.inscreva_se),
@@ -173,30 +172,28 @@ fun LoginScreen(
                 fontSize = 16.sp,
                 fontFamily = dmSansFamily,
                 fontWeight = FontWeight.Normal,
-                modifier = Modifier.clickable {
-                    navController.navigate(Screens.Register.route)
-                }
+                modifier =
+                    Modifier.clickable {
+                        navController.navigate(Screens.Register.route)
+                    },
             )
         }
     }
 }
 
-fun validateEmail(email: String): EmailErrorType {
-    return when {
+fun validateEmail(email: String): EmailErrorType =
+    when {
         email.isEmpty() -> EmailErrorType.Empty
         !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> EmailErrorType.InvalidFormat
         else -> EmailErrorType.None
     }
-}
 
-fun validatePassword(password: String): PasswordErrorType {
-    return when {
+fun validatePassword(password: String): PasswordErrorType =
+    when {
         password.isEmpty() -> PasswordErrorType.Empty
         password.length < 8 -> PasswordErrorType.minimumPassword
         else -> PasswordErrorType.None
     }
-}
-
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
