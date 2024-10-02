@@ -25,3 +25,7 @@ fun provideRetrofit(client: OkHttpClient): Retrofit =
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
+
+fun provideOkHttpClient(): OkHttpClient =
+    OkHttpClient.Builder()
+        .build()
