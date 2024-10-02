@@ -1,11 +1,20 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
+import com.nuvemconnect.app.nuvemconnect.model.service.LoginRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel :
+    ViewModel(),
+    KoinComponent {
+    private val serviceRepository: ServiceRepository by inject()
 
     private val _name = MutableStateFlow("")
     val name: StateFlow<String> = _name.asStateFlow()
@@ -41,4 +50,10 @@ class LoginViewModel : ViewModel() {
         _isUserInteracted.value = true
     }
 
+    fun onLoginClick()  {
+        val account: LoginRequest = LoginRequest(email = _email.value, password = password.value)
+        viewModelScope.launch {
+            serviceRepository.login(account)
+        }
+    }
 }
