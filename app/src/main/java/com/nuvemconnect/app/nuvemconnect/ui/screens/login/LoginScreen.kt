@@ -117,10 +117,12 @@ fun LoginScreen(
         Spacer(modifier = modifier.height(66.dp))
         CustomButton(
             onClick = {
-                val validateResponse = validateEmail(email)
-                if(validateResponse == EmailErrorType.None){
-                    viewModel.onLoginClick()
-                }
+                val validateEmail = validateEmail(email)
+                val validatePassword = validatePassword(password)
+                if (validateEmail == EmailErrorType.None && validatePassword == PasswordErrorType.None)
+                    {
+                        viewModel.onLoginClick()
+                    }
                 // navController.navigate(Screens.Home.route)
             },
             text = "Entrar",
