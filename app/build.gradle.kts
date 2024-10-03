@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.converter.gson)
     implementation(libs.retrofit)
+    implementation(libs.okhttp.logging.interceptor)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
