@@ -3,6 +3,7 @@ package com.nuvemconnect.app.nuvemconnect.di.modules
 import com.nuvemconnect.app.nuvemconnect.data.network.AuthService
 import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -11,7 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 val authModule =
     module {
         single(named("authRetrofit")) { provideRetrofit(get()) }
-        single { provideOkHttpClient() }
+        single { provideOkHttpClient(get()) }
+        single { provideLogInterceptor() }
         single { provideRepository(get()) }
         single { provideService(get(named("authRetrofit"))) }
     }
@@ -33,6 +35,13 @@ fun provideRetrofit(client: OkHttpClient): Retrofit =
         .client(client)
         .build()
 
-fun provideOkHttpClient(): OkHttpClient =
+fun provideOkHttpClient(httpLogginInterceptor: HttpLoggingInterceptor): OkHttpClient =
     OkHttpClient.Builder()
+        .addInterceptor(httpLogginInterceptor)
         .build()
+
+fun provideLogInterceptor(): HttpLoggingInterceptor{
+    return HttpLoggingInterceptor().apply {
+        setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
+}
