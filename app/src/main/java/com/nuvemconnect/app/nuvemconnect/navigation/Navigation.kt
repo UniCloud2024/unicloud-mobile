@@ -14,7 +14,7 @@ fun Navigation(modifier: Modifier = Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = Screens.Splash.route, // SplashGraph
+        startDestination = Graph.HomeGraph.route
     ) {
         // Splash screen
         splashScreen(navController, modifier)

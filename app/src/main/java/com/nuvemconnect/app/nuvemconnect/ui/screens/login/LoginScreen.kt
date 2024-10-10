@@ -143,6 +143,7 @@ fun LoginScreen(
                         uiStateWithRemember.collect { state ->
                             if (state.onSucess)
                                 {
+                                    delay(1000)
                                     navigateToHome()
                                 }
 

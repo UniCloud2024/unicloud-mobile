@@ -1,9 +1,14 @@
 package com.nuvemconnect.app.nuvemconnect.di.modules
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.nuvemconnect.app.nuvemconnect.data.network.AuthService
 import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -14,12 +19,13 @@ val authModule =
         single(named("authRetrofit")) { provideRetrofit(get()) }
         single { provideOkHttpClient(get()) }
         single { provideLogInterceptor() }
-        single { provideRepository(get()) }
+        single { provideRepository(get(), get()) }
         single { provideService(get(named("authRetrofit"))) }
+        single { provideAuthDataStore(androidContext()) }
     }
 
-fun provideRepository(authService: AuthService): ServiceRepository  {
-    val repository = ServiceRepository(authService = authService)
+fun provideRepository(authService: AuthService, dataStore: DataStore<Preferences>): ServiceRepository  {
+    val repository = ServiceRepository(authService = authService, dataStore = dataStore)
     return repository
 }
 
@@ -44,4 +50,10 @@ fun provideLogInterceptor(): HttpLoggingInterceptor{
     return HttpLoggingInterceptor().apply {
         setLevel(HttpLoggingInterceptor.Level.BODY)
     }
+}
+
+val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+
+fun provideAuthDataStore(context: Context): DataStore<Preferences>{
+    return context.authDataStore
 }

@@ -28,3 +28,12 @@ fun NavGraphBuilder.authGraph(
         verificationLinkScreen(navController)
     }
 }
+
+fun NavController.navigateToAuthGraph(){
+    navigate(route = Graph.AuthGraph.route){
+        launchSingleTop = true
+        popUpTo(Graph.AuthGraph.route){
+            inclusive = true
+        }
+    }
+}

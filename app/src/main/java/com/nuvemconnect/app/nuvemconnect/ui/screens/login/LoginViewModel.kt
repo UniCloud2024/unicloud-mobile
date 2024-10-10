@@ -50,8 +50,12 @@ class LoginViewModel :
             val response = serviceRepository.login(account)
             when (response.code()) {
                 200 -> {
-                    _uiState.value = _uiState.value.copy(onSucess = true)
-                    _uiState.value = _uiState.value.copy(onError = null)
+                    response.body()?.let { body ->
+                        saveTokenJWT(body.token)
+                        _uiState.value = _uiState.value.copy(onSucess = true)
+                        _uiState.value = _uiState.value.copy(onError = null)
+                    }
+
                 }
                 400 -> {
                     _uiState.value = _uiState.value.copy(onError = "Preencha todos os campos adequadamente e tente novamente")
@@ -71,5 +75,11 @@ class LoginViewModel :
 
     fun dimissError() {
         _uiState.value = _uiState.value.copy(onError = null)
+    }
+
+    private fun saveTokenJWT(token: String){
+        viewModelScope.launch {
+            serviceRepository.saveAuthToken(token)
+        }
     }
 }
