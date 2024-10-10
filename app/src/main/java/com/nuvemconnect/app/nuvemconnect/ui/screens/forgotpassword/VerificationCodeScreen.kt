@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
-import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToResetPassword
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.VerificationCodeViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.components.CodeNumberField
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
@@ -27,21 +27,24 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
-fun VerificationCodeScreen(navController: NavController) {
-
+fun VerificationCodeScreen(
+    navController: NavController,
+    viewModel: VerificationCodeViewModel,
+    onNavigateToResetPasword: () -> Unit = {},
+) {
     val modifier: Modifier = Modifier
     val scrollState = rememberScrollState()
+    val uiState = viewModel.uiState
 
     Column(
         horizontalAlignment = Alignment.Start,
-        modifier = modifier.padding(top = 36.dp, start = 21.dp, end = 21.dp)
+        modifier = modifier.padding(top = 36.dp, start = 21.dp, end = 21.dp),
     ) {
-
         TopBar(
             headingTitle = stringResource(id = R.string.title_forgot_password_2),
             subtitleText = stringResource(id = R.string.subtitle_forgot_password_2),
             navController = navController,
-            onBackClick = { navController.navigateUp() }
+            onBackClick = { navController.navigateUp() },
         )
 
         Column(modifier.verticalScroll(scrollState)) {
@@ -49,30 +52,31 @@ fun VerificationCodeScreen(navController: NavController) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
-                CodeNumberField()
+                CodeNumberField() // TODO: COMO TA ATUALIZANDO O STATE DO FORMULARIO???
             }
 
             Spacer(modifier = modifier.height(34.dp))
             CustomButton(
                 onClick = {
-                    navController.navigateToResetPassword()
+                    if (viewModel.verifyCode()) {
+                        onNavigateToResetPasword()
+                    }
                 },
                 text = stringResource(R.string.verificar),
                 backgroundColor = primary100,
                 fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
             )
             Spacer(modifier = Modifier.height(21.dp))
             Spacer(modifier = modifier.padding(bottom = 16.dp))
         }
-
     }
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun VerificationCodePreview() {
-    VerificationCodeScreen(navController = rememberNavController())
+    VerificationCodeScreen(navController = rememberNavController(), viewModel = VerificationCodeViewModel())
 }

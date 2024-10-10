@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
 import com.nuvemconnect.app.nuvemconnect.model.service.LoginRequest
+import com.nuvemconnect.app.nuvemconnect.model.service.ResetPasswordRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -55,7 +56,6 @@ class LoginViewModel :
                         _uiState.value = _uiState.value.copy(onSucess = true)
                         _uiState.value = _uiState.value.copy(onError = null)
                     }
-
                 }
                 400 -> {
                     _uiState.value = _uiState.value.copy(onError = "Preencha todos os campos adequadamente e tente novamente")
@@ -77,9 +77,18 @@ class LoginViewModel :
         _uiState.value = _uiState.value.copy(onError = null)
     }
 
-    private fun saveTokenJWT(token: String){
+    private fun saveTokenJWT(token: String)  {
         viewModelScope.launch {
             serviceRepository.saveAuthToken(token)
+        }
+    }
+
+    fun resetPasswordRequest()  {
+        viewModelScope.launch {
+            val response = serviceRepository.resetPasswordRequest(ResetPasswordRequest(uiState.value.email))
+            when (response.code()) {
+                200 -> { }
+            }
         }
     }
 }

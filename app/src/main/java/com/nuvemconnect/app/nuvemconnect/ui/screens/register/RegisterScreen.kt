@@ -1,5 +1,6 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.register
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -8,8 +9,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,21 +31,25 @@ import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
-import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validateEmail
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validatePassword
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    viewModel: LoginViewModel = koinViewModel(),
+    viewModel: RegisterViewModel = koinViewModel(),
 ) {
     val modifier: Modifier = Modifier
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateWithRemember = remember { viewModel.uiState }
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -106,7 +114,25 @@ fun RegisterScreen(
             Spacer(modifier = modifier.height(35.dp))
             CustomButton(
                 onClick = {
-                    navController.navigateToVerificationLink()
+                    val response = viewModel.onRegisterClick()
+                    scope.launch {
+                        uiStateWithRemember.collect { state ->
+                            if (state.onError != null)
+                                {
+                                    delay(1000)
+                                    Toast.makeText(context, state.onError, Toast.LENGTH_LONG).show()
+                                    viewModel.dimissError()
+                                }
+
+                            if (state.onSucess != null)
+                                {
+                                    Toast.makeText(context, state.onSucess, Toast.LENGTH_LONG).show()
+                                    delay(1000)
+                                    navController.navigateToVerificationLink()
+                                    viewModel.dimissSucess()
+                                }
+                        }
+                    }
                 },
                 text = stringResource(R.string.registrar),
                 backgroundColor = primary100,
@@ -130,5 +156,6 @@ fun validatedName(name: String): NameErrorType =
 private fun RegisterScreenPreview() {
     RegisterScreen(
         navController = rememberNavController(),
+        viewModel = RegisterViewModel(),
     )
 }

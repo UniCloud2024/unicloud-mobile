@@ -1,5 +1,6 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,9 +14,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,26 +30,32 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
+import com.nuvemconnect.app.nuvemconnect.model.service.ResetPasswordResponse
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
-import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToVerificationCode
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
-import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validateEmail
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ForgotPasswordScreen(
     navController: NavController,
-    viewModel: LoginViewModel = koinViewModel(),
+    onElevateEmail: (String) -> Unit = {},
+    viewModel: ForgotPasswordViewModel = koinViewModel(),
+    onNavigateToVerificationCode: (ResetPasswordResponse) -> Unit = {},
 ) {
     val modifier: Modifier = Modifier
+    val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateWithRemember = remember { viewModel.uiState }
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -78,7 +88,28 @@ fun ForgotPasswordScreen(
             Spacer(modifier = modifier.height(26.dp))
             CustomButton(
                 onClick = {
-                    navController.navigateToVerificationCode()
+                    viewModel.resetPasswordRequest()
+                    scope.launch {
+                        delay(1000)
+                        uiStateWithRemember.collect { state ->
+                            if (state.onSucess)
+                                {
+                                    uiState.value.response?.let {
+                                        onElevateEmail(state.email)
+                                        onNavigateToVerificationCode(it)
+                                    }
+                                }
+
+                            if (state.onError != null)
+                                {
+                                    uiState.value.onError?.let {
+                                        Toast.makeText(context, state.onError, Toast.LENGTH_LONG).show()
+                                    }
+                                    delay(1000)
+                                    viewModel.dimissError()
+                                }
+                        }
+                    }
                 },
                 text = stringResource(R.string.enviar_codigo),
                 backgroundColor = primary100,
@@ -117,5 +148,5 @@ fun ForgotPasswordScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ForgotPasswordPreview() {
-    ForgotPasswordScreen(rememberNavController(), viewModel = LoginViewModel())
+    ForgotPasswordScreen(rememberNavController(), viewModel = ForgotPasswordViewModel())
 }
