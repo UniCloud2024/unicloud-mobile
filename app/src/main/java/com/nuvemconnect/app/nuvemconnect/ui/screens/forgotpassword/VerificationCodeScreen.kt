@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,38 +27,46 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
-fun VerificationCodeScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun VerificationCodeScreen(navController: NavController) {
+
+    val modifier: Modifier = Modifier
+    val scrollState = rememberScrollState()
 
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = modifier.padding(top = 36.dp, start = 21.dp, end = 21.dp)
     ) {
+
         TopBar(
             headingTitle = stringResource(id = R.string.title_forgot_password_2),
             subtitleText = stringResource(id = R.string.subtitle_forgot_password_2),
             navController = navController,
             onBackClick = { navController.navigateUp() }
         )
-        Spacer(modifier = modifier.height(45.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            CodeNumberField()
-        }
 
-        Spacer(modifier = modifier.height(34.dp))
-        CustomButton(
-            onClick = {
-                navController.navigateToResetPassword()
-            },
-            text = stringResource(R.string.verificar),
-            backgroundColor = primary100,
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Normal
-        )
-        Spacer(modifier = Modifier.height(21.dp))
+        Column(modifier.verticalScroll(scrollState)) {
+            Spacer(modifier = modifier.height(45.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                CodeNumberField()
+            }
+
+            Spacer(modifier = modifier.height(34.dp))
+            CustomButton(
+                onClick = {
+                    navController.navigateToResetPassword()
+                },
+                text = stringResource(R.string.verificar),
+                backgroundColor = primary100,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Normal
+            )
+            Spacer(modifier = Modifier.height(21.dp))
+            Spacer(modifier = modifier.padding(bottom = 16.dp))
+        }
 
     }
 }

@@ -32,20 +32,16 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validateEmail
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validatePassword
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    viewModel: LoginViewModel = viewModel(),
+    viewModel: LoginViewModel = koinViewModel(),
 ) {
     val modifier: Modifier = Modifier
     val scrollState = rememberScrollState()
-
-    val name by viewModel.name.collectAsStateWithLifecycle()
-    val email by viewModel.email.collectAsStateWithLifecycle()
-    val password by viewModel.password.collectAsStateWithLifecycle()
-    val confirmPassword by viewModel.confirmPassword.collectAsStateWithLifecycle()
-    val isUserInteracted by viewModel.isUserInteracted.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -64,13 +60,13 @@ fun RegisterScreen(
                 onValueChange = { newEmail ->
                     viewModel.onEmailChange(newEmail)
                 },
-                value = email,
+                value = uiState.value.email,
                 leadingIcon = painterResource(id = R.drawable.baseline_mail_outline_24),
                 placeholder = stringResource(id = R.string.email),
                 validate = {
-                    validateEmail(email)
+                    validateEmail(uiState.value.email)
                 },
-                isUserInteracted = isUserInteracted,
+                isUserInteracted = uiState.value.isUserInteracted,
             )
             Spacer(modifier = modifier.height(17.dp))
             CustomTextField(
@@ -78,9 +74,9 @@ fun RegisterScreen(
                     viewModel.onName(newName)
                 },
                 leadingIcon = painterResource(id = R.drawable.baseline_user_01),
-                value = name,
+                value = uiState.value.name,
                 placeholder = stringResource(R.string.nome_do_usuario),
-                validate = { validateEmail(name) }, // TODO: ajuda para a validação do nome e não do tipo Email
+                validate = { validateEmail(uiState.value.name) }, // TODO: ajuda para a validação do nome e não do tipo Email
                 isUserInteracted = false,
             )
             Spacer(modifier = modifier.height(17.dp))
@@ -88,24 +84,24 @@ fun RegisterScreen(
                 onValueChange = { newPassword ->
                     viewModel.onPasswordChange(newPassword)
                 },
-                value = password,
+                value = uiState.value.password,
                 placeholder = stringResource(id = R.string.digite_sua_senha),
                 validate = { password ->
                     validatePassword(password)
                 },
-                isUserInteracted = isUserInteracted,
+                isUserInteracted = uiState.value.isUserInteracted,
             )
             Spacer(modifier = modifier.height(17.dp))
             PasswordTextField(
                 onValueChange = { newConfirmPassword ->
                     viewModel.onConfirmPassword(newConfirmPassword)
                 },
-                value = confirmPassword,
+                value = uiState.value.confirmPassword,
                 placeholder = stringResource(id = R.string.confirme_sua_senha),
                 validate = { confirmedPassword ->
                     validatePassword(confirmedPassword)
                 },
-                isUserInteracted = isUserInteracted,
+                isUserInteracted = uiState.value.isUserInteracted,
             )
             Spacer(modifier = modifier.height(35.dp))
             CustomButton(

@@ -1,6 +1,7 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.login
 
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -16,9 +17,12 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,18 +48,25 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral60
 import com.nuvemconnect.app.nuvemconnect.ui.theme.neutral70
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: LoginViewModel,
+    viewModel: LoginViewModel = koinViewModel(),
+    navigateToHome: () -> Unit = {},
 ) {
     val modifier: Modifier = Modifier
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
-    val email by viewModel.email.collectAsStateWithLifecycle()
-    val password by viewModel.password.collectAsStateWithLifecycle()
-    val isUserInteracted by viewModel.isUserInteracted.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiStateWithRemember: StateFlow<LoginUiState> = remember { viewModel.uiState }
 
     Column(
         modifier =
@@ -83,7 +94,7 @@ fun LoginScreen(
         )
         Spacer(modifier = modifier.height(52.dp))
         CustomTextField(
-            value = email,
+            value = uiState.value.email,
             onValueChange = { newEmail ->
                 viewModel.onEmailChange(newEmail)
             },
@@ -92,19 +103,19 @@ fun LoginScreen(
             validate = { email ->
                 validateEmail(email)
             },
-            isUserInteracted = isUserInteracted,
+            isUserInteracted = uiState.value.isUserInteracted,
         )
         Spacer(modifier = modifier.height(17.dp))
         PasswordTextField(
             onValueChange = { newPassword ->
                 viewModel.onPasswordChange(newPassword)
             },
-            value = password,
+            value = uiState.value.password,
             placeholder = stringResource(R.string.senha),
             validate = { password ->
                 validatePassword(password)
             },
-            isUserInteracted = isUserInteracted,
+            isUserInteracted = uiState.value.isUserInteracted,
         )
         Spacer(modifier = modifier.height(26.dp))
         Text(
@@ -120,14 +131,32 @@ fun LoginScreen(
             fontFamily = dmSansFamily,
         )
         Spacer(modifier = modifier.height(66.dp))
+
         CustomButton(
             onClick = {
-                val validateEmail = validateEmail(email)
-                val validatePassword = validatePassword(password)
+                val validateEmail = validateEmail(uiState.value.email)
+                val validatePassword = validatePassword(uiState.value.password)
                 if (validateEmail == EmailErrorType.None && validatePassword == PasswordErrorType.None) {
                     viewModel.onLoginClick()
+
+                    scope.launch {
+                        uiStateWithRemember.collect { state ->
+                            if (state.onSucess)
+                                {
+                                    navigateToHome()
+                                }
+
+                            state.onError?.let {
+                                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
+                    scope.launch {
+                        delay(3000)
+                        viewModel.dimissError()
+                    }
                 }
-                // navController.navigate(Screens.Home.route)
             },
             text = "Entrar",
             modifier = modifier.fillMaxWidth(),

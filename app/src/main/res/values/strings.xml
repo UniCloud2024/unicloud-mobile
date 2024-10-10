@@ -8,7 +8,7 @@
     <string name="title_forgot_password_3">Redefinir sua senha</string>
     <string name="title_forgot_password_2">Insira seu código</string>
     <string name="subtitle_forgot_password_1">Se você esqueceu sua senha, por favor digite seu e-mail abaixo para restaurar a senha.</string>
-    <string name="subtitle_forgot_password_2">Enviamos um e-mail para o seu e-mail, verifique seu e-mail e digite o número abaixo</string>
+    <string name="subtitle_forgot_password_2">Verifique o código que te enviamos no seu e-mail e digite-o logo abaixo</string>
     <string name="subtitle_forgot_password_3">Insira uma nova senha</string>
 
     <!-- TODO: Componants  -->

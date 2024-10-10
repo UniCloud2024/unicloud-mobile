@@ -5,55 +5,71 @@ import androidx.lifecycle.viewModelScope
 import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
 import com.nuvemconnect.app.nuvemconnect.model.service.LoginRequest
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+
+data class LoginUiState(
+    val name: String = "",
+    val email: String = "",
+    val isUserInteracted: Boolean = false,
+    val password: String = "",
+    val confirmPassword: String = "",
+    val onError: String? = null,
+    val onSucess: Boolean = false,
+)
 
 class LoginViewModel :
     ViewModel(),
     KoinComponent {
     private val serviceRepository: ServiceRepository by inject()
 
-    private val _name = MutableStateFlow("")
-    val name: StateFlow<String> = _name.asStateFlow()
-
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email.asStateFlow()
-
-    private val _isUserInteracted = MutableStateFlow(false)
-    val isUserInteracted: StateFlow<Boolean> = _isUserInteracted
-
-    private val _password = MutableStateFlow("")
-    val password: StateFlow<String> = _password.asStateFlow()
-
-    private val _confirmPassword = MutableStateFlow("")
-    val confirmPassword: StateFlow<String> = _confirmPassword.asStateFlow()
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState = _uiState.asStateFlow()
 
     fun onName(newName: String) {
-        _name.value = newName
+        _uiState.value = _uiState.value.copy(name = newName)
     }
 
     fun onEmailChange(newEmail: String) {
-        _email.value = newEmail
-        _isUserInteracted.value = true
+        _uiState.value = _uiState.value.copy(email = newEmail, isUserInteracted = true)
     }
 
     fun onPasswordChange(newPassword: String) {
-        _password.value = newPassword
-        _isUserInteracted.value = true
+        _uiState.value = _uiState.value.copy(password = newPassword, isUserInteracted = true)
     }
 
     fun onConfirmPassword(confirmPassword: String) {
-        _confirmPassword.value = confirmPassword
-        _isUserInteracted.value = true
+        _uiState.value = _uiState.value.copy(confirmPassword = confirmPassword, isUserInteracted = true)
     }
 
-    fun onLoginClick()  {
-        val account: LoginRequest = LoginRequest(email = _email.value, password = password.value)
+    fun onLoginClick() {
+        val account = LoginRequest(email = uiState.value.email, password = uiState.value.password)
         viewModelScope.launch {
-            serviceRepository.login(account)
+            val response = serviceRepository.login(account)
+            when (response.code()) {
+                200 -> {
+                    _uiState.value = _uiState.value.copy(onSucess = true)
+                    _uiState.value = _uiState.value.copy(onError = null)
+                }
+                400 -> {
+                    _uiState.value = _uiState.value.copy(onError = "Preencha todos os campos adequadamente e tente novamente")
+                    _uiState.value = _uiState.value.copy(onSucess = false)
+                }
+                422 -> {
+                    _uiState.value = _uiState.value.copy(onError = "Usuario ou senha incorretos")
+                    _uiState.value = _uiState.value.copy(onSucess = false)
+                }
+                else -> {
+                    _uiState.value = _uiState.value.copy(onError = "Ocorreu um erro. Tente mais tarde novamente")
+                    _uiState.value = _uiState.value.copy(onSucess = false)
+                }
+            }
         }
+    }
+
+    fun dimissError() {
+        _uiState.value = _uiState.value.copy(onError = null)
     }
 }

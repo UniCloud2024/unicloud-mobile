@@ -8,9 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,21 +36,20 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.validateEmail
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
-
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ForgotPasswordScreen(
-    modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: LoginViewModel = koinViewModel(),
 ) {
-    val email by viewModel.email.collectAsState()
-    val isUserInteracted by viewModel.isUserInteracted.collectAsStateWithLifecycle()
-
+    val modifier: Modifier = Modifier
+    val scrollState = rememberScrollState()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         horizontalAlignment = Alignment.Start,
-        modifier = modifier.padding(top = 36.dp, start = 21.dp, end = 21.dp)
+        modifier = modifier.padding(top = 36.dp, start = 21.dp, end = 21.dp),
     ) {
         TopBar(
             headingSize = 28.sp,
@@ -57,54 +57,59 @@ fun ForgotPasswordScreen(
             subtitleText = stringResource(id = R.string.subtitle_forgot_password_1),
             subtitleSize = 18.sp,
             navController = navController,
-            onBackClick = { navController.navigateUp() }
+            onBackClick = { navController.navigateUp() },
         )
-        Spacer(modifier = modifier.height(45.dp))
-        CustomTextField(
-            value = email,
-            onValueChange = { newEmail ->
-                viewModel.onEmailChange(newEmail)
-                validateEmail(email)
-            },
-            placeholder = stringResource(R.string.digite_seu_email),
-            leadingIcon = painterResource(id = R.drawable.baseline_mail_outline_24),
-            validate = { email ->
-                validateEmail(email)
-            },
-            isUserInteracted = isUserInteracted
-        )
-        Spacer(modifier = modifier.height(26.dp))
-        CustomButton(
-            onClick = {
-                navController.navigateToVerificationCode()
-            },
-            text = stringResource(R.string.enviar_codigo),
-            backgroundColor = primary100,
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.SemiBold
-        )
-        Spacer(modifier = Modifier.height(21.dp))
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(R.string.voltar_para),
-                color = Color.Gray,
-                fontSize = 16.sp,
-                fontFamily = dmSansFamily,
-                fontWeight = FontWeight.Normal
+
+        Column(modifier.verticalScroll(scrollState)) {
+            Spacer(modifier = modifier.height(45.dp))
+            CustomTextField(
+                value = uiState.value.email,
+                onValueChange = { newEmail ->
+                    viewModel.onEmailChange(newEmail)
+                    validateEmail(uiState.value.email)
+                },
+                placeholder = stringResource(R.string.digite_seu_email),
+                leadingIcon = painterResource(id = R.drawable.baseline_mail_outline_24),
+                validate = { email ->
+                    validateEmail(email)
+                },
+                isUserInteracted = uiState.value.isUserInteracted,
             )
-            Text(
-                text = stringResource(R.string.fazer_login),
-                color = primary100,
-                fontSize = 16.sp,
-                fontFamily = dmSansFamily,
-                fontWeight = FontWeight.Normal,
-                modifier = modifier.clickable {
-                    navController.navigate(Screens.Login.route)
-                }
+            Spacer(modifier = modifier.height(26.dp))
+            CustomButton(
+                onClick = {
+                    navController.navigateToVerificationCode()
+                },
+                text = stringResource(R.string.enviar_codigo),
+                backgroundColor = primary100,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.SemiBold,
             )
+            Spacer(modifier = Modifier.height(21.dp))
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(R.string.voltar_para),
+                    color = Color.Gray,
+                    fontSize = 16.sp,
+                    fontFamily = dmSansFamily,
+                    fontWeight = FontWeight.Normal,
+                )
+                Text(
+                    text = stringResource(R.string.fazer_login),
+                    color = primary100,
+                    fontSize = 16.sp,
+                    fontFamily = dmSansFamily,
+                    fontWeight = FontWeight.Normal,
+                    modifier =
+                        modifier.clickable {
+                            navController.navigate(Screens.Login.route)
+                        },
+                )
+            }
+            Spacer(modifier = modifier.padding(bottom = 16.dp))
         }
     }
 }
@@ -112,5 +117,5 @@ fun ForgotPasswordScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ForgotPasswordPreview() {
-    ForgotPasswordScreen(Modifier, rememberNavController())
+    ForgotPasswordScreen(rememberNavController(), viewModel = LoginViewModel())
 }

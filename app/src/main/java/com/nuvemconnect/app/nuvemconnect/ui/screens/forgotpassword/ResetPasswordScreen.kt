@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,18 +25,18 @@ import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
 import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ResetPasswordScreen(
-    modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: LoginViewModel = koinViewModel(),
 
 ) {
-    val password by viewModel.password.collectAsStateWithLifecycle()
-    val confirmedPassword by viewModel.confirmPassword.collectAsStateWithLifecycle()
-   val isUserInteracted by viewModel.isUserInteracted.collectAsStateWithLifecycle()
 
+    val modifier: Modifier = Modifier
+    val scrollState = rememberScrollState()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -49,40 +51,44 @@ fun ResetPasswordScreen(
             navController = navController,
             onBackClick = { navController.navigateUp() }
         )
-        Spacer(modifier = modifier.height(68.dp))
-        PasswordTextField(
-            onValueChange = { newPassword ->
-                viewModel.onPasswordChange(newPassword  )
 
-            },
-            value = password,
-            placeholder = stringResource(R.string.digite_sua_senha),
-            validate = { password ->
-                validatePassword(password)
-            },
-            isUserInteracted = isUserInteracted,
-        )
-        Spacer(modifier = modifier.height(30.dp))
-        PasswordTextField(
-            onValueChange = { newPassword ->
-                viewModel.onConfirmPassword(newPassword)
-            },
-            value = confirmedPassword,
-            placeholder = stringResource(id = R.string.confirme_sua_senha),
-            validate = {
-                validatePassword(password)
-            },
-            isUserInteracted = isUserInteracted
-        )
-        Spacer(modifier = modifier.height(40.dp))
-        CustomButton(
-            onClick = {
-                navController.navigateToLogin()
-            },
-            text = stringResource(R.string.redefinir),
-            backgroundColor = primary100
-        )
-        Spacer(modifier = Modifier.height(21.dp))
+        Column(modifier.verticalScroll(scrollState)){
+            Spacer(modifier = modifier.height(68.dp))
+            PasswordTextField(
+                onValueChange = { newPassword ->
+                    viewModel.onPasswordChange(newPassword  )
+
+                },
+                value = uiState.value.password,
+                placeholder = stringResource(R.string.digite_sua_senha),
+                validate = { password ->
+                    validatePassword(password)
+                },
+                isUserInteracted = uiState.value.isUserInteracted,
+            )
+            Spacer(modifier = modifier.height(30.dp))
+            PasswordTextField(
+                onValueChange = { newPassword ->
+                    viewModel.onConfirmPassword(newPassword)
+                },
+                value = uiState.value.confirmPassword,
+                placeholder = stringResource(id = R.string.confirme_sua_senha),
+                validate = {
+                    validatePassword(uiState.value.password)
+                },
+                isUserInteracted = uiState.value.isUserInteracted
+            )
+            Spacer(modifier = modifier.height(40.dp))
+            CustomButton(
+                onClick = {
+                    navController.navigateToLogin()
+                },
+                text = stringResource(R.string.redefinir),
+                backgroundColor = primary100
+            )
+            Spacer(modifier = Modifier.height(21.dp))
+            Spacer(modifier = modifier.padding(bottom = 16.dp))
+        }
     }
 }
 fun validatePassword(password: String): PasswordErrorType {
@@ -97,5 +103,5 @@ fun validatePassword(password: String): PasswordErrorType {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ResetPasswordPreview() {
-    ResetPasswordScreen(navController = rememberNavController(),)
+    ResetPasswordScreen(navController = rememberNavController(), viewModel = LoginViewModel())
 }

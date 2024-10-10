@@ -12,3 +12,12 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
         homeScreen(navController)
     }
 }
+
+fun NavController.navigateToHomeGraph(){
+    navigate(route = Graph.HomeGraph.route){
+        launchSingleTop = true
+        popUpTo(route = Graph.HomeGraph.route){
+            inclusive = true
+        }
+    }
+}
