@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,10 +47,12 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: LoginViewModel,
 ) {
+    val modifier: Modifier = Modifier
+    val scrollState = rememberScrollState()
+
     val email by viewModel.email.collectAsStateWithLifecycle()
     val password by viewModel.password.collectAsStateWithLifecycle()
     val isUserInteracted by viewModel.isUserInteracted.collectAsStateWithLifecycle()
@@ -57,7 +61,8 @@ fun LoginScreen(
         modifier =
             modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 20.dp)
+                .verticalScroll(state = scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = modifier.height(90.dp))
@@ -119,10 +124,9 @@ fun LoginScreen(
             onClick = {
                 val validateEmail = validateEmail(email)
                 val validatePassword = validatePassword(password)
-                if (validateEmail == EmailErrorType.None && validatePassword == PasswordErrorType.None)
-                    {
-                        viewModel.onLoginClick()
-                    }
+                if (validateEmail == EmailErrorType.None && validatePassword == PasswordErrorType.None) {
+                    viewModel.onLoginClick()
+                }
                 // navController.navigate(Screens.Home.route)
             },
             text = "Entrar",
@@ -181,6 +185,8 @@ fun LoginScreen(
                     },
             )
         }
+
+        Spacer(modifier = modifier.height(30.dp))
     }
 }
 
@@ -201,5 +207,5 @@ fun validatePassword(password: String): PasswordErrorType =
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun LoginScreenPreview() {
-    LoginScreen(Modifier, rememberNavController(), LoginViewModel())
+    LoginScreen(rememberNavController(), LoginViewModel())
 }

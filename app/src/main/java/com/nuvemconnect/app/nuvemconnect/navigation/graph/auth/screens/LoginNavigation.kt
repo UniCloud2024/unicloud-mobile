@@ -11,13 +11,13 @@ import com.nuvemconnect.app.nuvemconnect.ui.screens.login.LoginViewModel
 fun NavGraphBuilder.loginScreen(
     navController: NavController,
     modifier: Modifier,
-)  {
+) {
     composable(route = Screens.Login.route) {
-        LoginScreen(modifier, navController, LoginViewModel())
+        LoginScreen(navController, LoginViewModel())
     }
 }
 
-fun NavController.navigateToLogin()  {
+fun NavController.navigateToLogin() {
     navigate(route = Screens.Login.route) {
         launchSingleTop = true
         popUpTo(Screens.Login.route)

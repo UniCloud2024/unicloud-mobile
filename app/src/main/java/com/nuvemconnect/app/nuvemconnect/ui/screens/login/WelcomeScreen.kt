@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,43 +42,49 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 
 @Composable
-fun WelcomeScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun WelcomeScreen(navController: NavController) {
+    val modifier: Modifier = Modifier
+    val scrollState = rememberScrollState()
+
     Box(
-        modifier = modifier
-            .paint(
-                painter = painterResource(id = R.drawable.background_screen_welcome),
-                sizeToIntrinsics = true,
-                contentScale = ContentScale.Crop
-            )
-
-
+        modifier =
+            modifier
+                .fillMaxSize(1f)
+                .paint(
+                    painter = painterResource(id = R.drawable.background_screen_welcome),
+                    sizeToIntrinsics = true,
+                    contentScale = ContentScale.Crop,
+                ),
     ) {
         Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .verticalScroll(state = scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
             Icon(
                 painter = painterResource(id = R.drawable.nuvem_connect_logo),
-                contentDescription = stringResource(
-                    id = R.string.logo
-                ),
+                contentDescription =
+                    stringResource(
+                        id = R.string.logo,
+                    ),
                 tint = Color.White,
-                modifier = modifier.padding(top = 170.dp)
+                modifier = modifier.padding(top = 90.dp),
             )
             Text(
                 text = stringResource(id = R.string.logo_name),
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
-                fontSize = 40.sp,
-                modifier = modifier.padding(25.dp)
+                fontSize = 30.sp,
+                modifier = modifier.padding(25.dp),
             )
-            Spacer(modifier = modifier.padding(top = 139.dp))
+            Spacer(modifier = modifier.padding(top = 90.dp))
             CustomButton(
-                modifier = modifier
-                    .fillMaxWidth(),
+                modifier =
+                    modifier
+                        .fillMaxWidth(),
                 onClick = {
                     navController.navigateToLogin()
                 },
@@ -85,12 +93,13 @@ fun WelcomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                 backgroundColor = primary100,
                 textColor = Color.White,
                 fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
             )
             CustomButton(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
+                modifier =
+                    modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                 onClick = {
                     navController.navigateToRegister()
                 },
@@ -103,58 +112,58 @@ fun WelcomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                 fontWeight = FontWeight.Bold,
             )
 
-            Spacer(modifier = modifier.height(56.dp))
-            Text(text = helpText(), textAlign = TextAlign.Center)
-
-
+            Spacer(modifier = modifier.height(80.dp))
+            Text(text = helpText(), textAlign = TextAlign.Center, modifier = Modifier.padding(bottom = 30.dp))
         }
     }
-
 }
 
 @Composable
 fun helpText(): AnnotatedString {
-    val help = buildAnnotatedString {
-        withStyle(
-            style = SpanStyle(
-                fontSize = 14.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Normal,
-                color = base_white
-            )
-        ) {
-            append(stringResource(R.string.precisa_de_ajuda))
-        }
+    val help =
+        buildAnnotatedString {
+            withStyle(
+                style =
+                    SpanStyle(
+                        fontSize = 14.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Normal,
+                        color = base_white,
+                    ),
+            ) {
+                append(stringResource(R.string.precisa_de_ajuda))
+            }
 
-        withStyle(
-            style = SpanStyle(
-                fontSize = 14.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Normal,
-                color = base_white,
-                textDecoration = TextDecoration.Underline
-            )
-        ) {
-            append(stringResource(R.string.entre_em_contato))
-            pushStringAnnotation(tag = "URL", annotation = " futuro link aqui")
-        }
+            withStyle(
+                style =
+                    SpanStyle(
+                        fontSize = 14.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Normal,
+                        color = base_white,
+                        textDecoration = TextDecoration.Underline,
+                    ),
+            ) {
+                append(stringResource(R.string.entre_em_contato))
+                pushStringAnnotation(tag = "URL", annotation = " futuro link aqui")
+            }
 
-        withStyle(
-            style = SpanStyle(
-                fontSize = 14.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Normal,
-                textDecoration = TextDecoration.Underline,
-                color = base_white
-            )
-        ) {
-            append(stringResource(R.string.conosco))
-            pushStringAnnotation(tag = "URL", annotation = " futuro link aqui")
+            withStyle(
+                style =
+                    SpanStyle(
+                        fontSize = 14.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Normal,
+                        textDecoration = TextDecoration.Underline,
+                        color = base_white,
+                    ),
+            ) {
+                append(stringResource(R.string.conosco))
+                pushStringAnnotation(tag = "URL", annotation = " futuro link aqui")
+            }
         }
-    }
     return help
 }
-
 
 @Preview(showBackground = true)
 @Composable
