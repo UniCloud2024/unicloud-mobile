@@ -1,5 +1,7 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,8 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,12 +23,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
-import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.VerificationCodeViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.components.CodeNumberField
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
 import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
+import kotlinx.coroutines.launch
 
 @Composable
 fun VerificationCodeScreen(
@@ -34,6 +38,8 @@ fun VerificationCodeScreen(
 ) {
     val modifier: Modifier = Modifier
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     val uiState = viewModel.uiState
 
     Column(
@@ -54,7 +60,14 @@ fun VerificationCodeScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
-                CodeNumberField() // TODO: COMO TA ATUALIZANDO O STATE DO FORMULARIO???
+                CodeNumberField(stateField = { stateFlowField ->
+                    scope.launch {
+                        stateFlowField.collect { collectedValue ->
+                            Log.e("VerificationCodeScreen", "$collectedValue")
+                            viewModel.updateInputCode(collectedValue)
+                        }
+                    }
+                })
             }
 
             Spacer(modifier = modifier.height(34.dp))
@@ -62,6 +75,8 @@ fun VerificationCodeScreen(
                 onClick = {
                     if (viewModel.verifyCode()) {
                         onNavigateToResetPasword()
+                    } else {
+                        Toast.makeText(context, "Código incorreto. Tente novamente.", Toast.LENGTH_LONG).show()
                     }
                 },
                 text = stringResource(R.string.verificar),

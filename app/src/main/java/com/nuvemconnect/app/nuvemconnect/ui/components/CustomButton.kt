@@ -39,16 +39,18 @@ fun CustomButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .width(328.dp)
-            .height(56.dp),
-        colors = ButtonDefaults.run {
-            buttonColors(
-                containerColor = backgroundColor,
-                contentColor = contentColor
-            )
-        },
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .width(328.dp)
+                .height(56.dp),
+        colors =
+            ButtonDefaults.run {
+                buttonColors(
+                    containerColor = backgroundColor,
+                    contentColor = contentColor,
+                )
+            },
         border = border,
         shape = RoundedCornerShape(100.dp),
         contentPadding = contentPadding,
@@ -60,13 +62,12 @@ fun CustomButton(
             color = textColor,
             fontWeight = fontWeight,
             fontFamily = fontFamily,
-
-            )
+        )
     }
 }
 
 @Preview
 @Composable
 private fun CustomButtonPreview() {
-    CustomButton(onClick = { /*TODO*/ }, text = "Registre-se")
+    CustomButton(onClick = { }, text = "Registre-se")
 }

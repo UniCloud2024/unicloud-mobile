@@ -1,6 +1,5 @@
 package com.nuvemconnect.app.nuvemconnect.navigation.graph.auth
 
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
@@ -14,14 +13,11 @@ import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.verificat
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.verificationLinkScreen
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.welcomeScreen
 
-fun NavGraphBuilder.authGraph(
-    navController: NavController,
-    modifier: Modifier,
-) {
+fun NavGraphBuilder.authGraph(navController: NavController) {
     navigation(startDestination = Screens.Welcome.route, route = Graph.AuthGraph.route) {
         welcomeScreen(navController)
         registerScreen(navController)
-        loginScreen(navController, modifier)
+        loginScreen(navController)
         forgotPasswordScreen(navController)
         verificationCodeScreen(navController)
         resetPasswordScreen(navController)
@@ -29,10 +25,10 @@ fun NavGraphBuilder.authGraph(
     }
 }
 
-fun NavController.navigateToAuthGraph(){
-    navigate(route = Graph.AuthGraph.route){
+fun NavController.navigateToAuthGraph()  {
+    navigate(route = Graph.AuthGraph.route) {
         launchSingleTop = true
-        popUpTo(Graph.AuthGraph.route){
+        popUpTo(Graph.AuthGraph.route) {
             inclusive = true
         }
     }

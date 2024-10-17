@@ -23,7 +23,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: HomeViewModel = koinViewModel()
+    viewModel: HomeViewModel = koinViewModel(),
 ) {
     val modifier: Modifier = Modifier
     val scope = rememberCoroutineScope()
@@ -33,9 +33,10 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         scope.launch {
             uiStateWithRemember.collect { state ->
-                if(!state.isAuthenticated){
-                    navController.navigateToAuthGraph()
-                }
+                if (!state.isAuthenticated)
+                    {
+                        navController.navigateToAuthGraph()
+                    }
             }
         }
     }
@@ -43,18 +44,17 @@ fun HomeScreen(
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = "Tela da Home")
 
         Button(onClick = {
             viewModel.logout()
-            scope.launch {
-                viewModel.verifyAuthentication()
-            }
-            if(!uiState.value.isAuthenticated){
-                navController.navigateToAuthGraph()
-            }
+            viewModel.verifyAuthentication()
+            if (!uiState.value.isAuthenticated)
+                {
+                    navController.navigateToAuthGraph()
+                }
         }) {
             Text(text = "Logout")
         }

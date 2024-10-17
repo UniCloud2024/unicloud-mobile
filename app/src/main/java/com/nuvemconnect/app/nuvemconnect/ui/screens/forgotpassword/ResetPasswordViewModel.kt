@@ -1,4 +1,4 @@
-package com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens
+package com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

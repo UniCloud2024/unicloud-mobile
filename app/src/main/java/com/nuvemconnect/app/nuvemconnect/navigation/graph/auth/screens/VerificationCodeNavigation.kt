@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.nuvemconnect.app.nuvemconnect.navigation.Screens
 import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.VerificationCodeScreen
+import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.VerificationCodeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.verificationCodeScreen(navController: NavController) {

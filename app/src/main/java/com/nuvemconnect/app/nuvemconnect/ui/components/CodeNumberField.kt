@@ -30,14 +30,22 @@ import androidx.compose.ui.unit.sp
 import com.nuvemconnect.app.nuvemconnect.ui.theme.dmSansFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 import com.nuvemconnect.app.nuvemconnect.ui.theme.white_two
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun CodeNumberField(
     modifier: Modifier = Modifier,
+    stateField: (MutableStateFlow<String>) -> Unit = {},
 ) {
     var otpText by remember {
         mutableStateOf("")
     }
+
+    if (otpText.length == 6)
+        {
+            val textFlow = remember { MutableStateFlow(otpText) }
+            stateField(textFlow)
+        }
 
     BasicTextField(
         value = otpText,
@@ -46,34 +54,36 @@ fun CodeNumberField(
                 otpText = it
             }
         },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Done
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done,
+            ),
         decorationBox = {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 repeat(6) { index ->
-                    val char = when {
-                        index >= otpText.length -> ""
-                        else -> otpText[index].toString()
-                    }
+                    val char =
+                        when {
+                            index >= otpText.length -> ""
+                            else -> otpText[index].toString()
+                        }
                     Box(
                         contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .width(41.dp)
-                            .height(46.dp)
-                            .background(
-                                color = white_two,
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .border(
-                                width = 1.dp,
-                                color = if (index == otpText.length) primary100 else Color.Transparent,
-                                shape = RoundedCornerShape(8.dp)
-                            )
+                        modifier =
+                            Modifier
+                                .width(41.dp)
+                                .height(46.dp)
+                                .background(
+                                    color = white_two,
+                                    shape = RoundedCornerShape(8.dp),
+                                ).border(
+                                    width = 1.dp,
+                                    color = if (index == otpText.length) primary100 else Color.Transparent,
+                                    shape = RoundedCornerShape(8.dp),
+                                ),
                     ) {
                         Text(
                             text = char,
@@ -87,7 +97,7 @@ fun CodeNumberField(
                     Spacer(modifier = modifier.width(6.dp))
                 }
             }
-        }
+        },
     )
 }
 

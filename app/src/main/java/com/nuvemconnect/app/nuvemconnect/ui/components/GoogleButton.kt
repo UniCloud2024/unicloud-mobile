@@ -36,26 +36,26 @@ fun GoogleButton(
     textColor: Color = MaterialTheme.colorScheme.surface,
     fontSize: TextUnit = 18.sp,
     border: BorderStroke? = null,
-    fontWeight: FontWeight = FontWeight.SemiBold
+    fontWeight: FontWeight = FontWeight.SemiBold,
 ) {
     Button(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         border = border,
-        colors = ButtonDefaults.run {
-            buttonColors(
-                containerColor = backgroundColor,
-                contentColor = contentColor,
-            )
-
-        },
+        colors =
+            ButtonDefaults.run {
+                buttonColors(
+                    containerColor = backgroundColor,
+                    contentColor = contentColor,
+                )
+            },
         shape = RoundedCornerShape(100.dp),
         contentPadding = contentPadding,
     ) {
         Icon(
             painter = painterResource(id = R.drawable.google_icon),
             contentDescription = "icone_google",
-            tint = Color.Unspecified
+            tint = Color.Unspecified,
         )
         Spacer(modifier = modifier.width(4.dp))
         Text(
@@ -72,5 +72,5 @@ fun GoogleButton(
 @Preview
 @Composable
 private fun CustomButtonPreview() {
-    GoogleButton(onClick = { /*TODO*/ }, text = "Registre-se")
+    GoogleButton(onClick = { }, text = "Registre-se")
 }

@@ -14,13 +14,13 @@ fun Navigation(modifier: Modifier = Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = Graph.HomeGraph.route
+        startDestination = Graph.HomeGraph.route,
     ) {
         // Splash screen
         splashScreen(navController, modifier)
 
         // Grafos de Navegação
-        authGraph(navController, modifier)
+        authGraph(navController)
         homeGraph(navController)
     }
 }

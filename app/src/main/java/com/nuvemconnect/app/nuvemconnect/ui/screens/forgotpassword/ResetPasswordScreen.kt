@@ -22,7 +22,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
-import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.ResetPasswordViewModel
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToLogin
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
@@ -90,20 +89,18 @@ fun ResetPasswordScreen(
                     scope.launch {
                         delay(1000)
                         uiStateWithRemember.collect { state ->
-                            if (state.onSucess != null)
-                                {
-                                    Toast.makeText(context, state.onSucess, Toast.LENGTH_LONG).show()
-                                    navController.navigateToLogin()
-                                    delay(1000)
-                                    viewModel.dimissSucess()
-                                }
+                            if (state.onSucess != null) {
+                                Toast.makeText(context, state.onSucess, Toast.LENGTH_LONG).show()
+                                navController.navigateToLogin()
+                                delay(1000)
+                                viewModel.dimissSucess()
+                            }
 
-                            if (state.onError != null)
-                                {
-                                    Toast.makeText(context, state.onError, Toast.LENGTH_LONG).show()
-                                    delay(1000)
-                                    viewModel.dimissError()
-                                }
+                            if (state.onError != null) {
+                                Toast.makeText(context, state.onError, Toast.LENGTH_LONG).show()
+                                delay(1000)
+                                viewModel.dimissError()
+                            }
                         }
                     }
                 },
