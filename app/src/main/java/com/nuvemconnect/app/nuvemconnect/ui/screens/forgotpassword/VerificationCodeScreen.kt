@@ -63,7 +63,6 @@ fun VerificationCodeScreen(
                 CodeNumberField(stateField = { stateFlowField ->
                     scope.launch {
                         stateFlowField.collect { collectedValue ->
-                            Log.e("VerificationCodeScreen", "$collectedValue")
                             viewModel.updateInputCode(collectedValue)
                         }
                     }

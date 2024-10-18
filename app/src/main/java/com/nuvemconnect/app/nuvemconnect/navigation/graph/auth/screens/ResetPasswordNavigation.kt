@@ -18,7 +18,6 @@ fun NavGraphBuilder.resetPasswordScreen(navController: NavController) {
         val viewModel: ResetPasswordViewModel = getViewModel()
         viewModel.updateArguments(tokenUUID = tokenUUID, token = token, email = email)
 
-        Log.e("ResetPasswordNavigation", "tokenUUID: $tokenUUID, token: $token  email: $email,")
         ResetPasswordScreen(navController = navController, viewModel)
     }
 }

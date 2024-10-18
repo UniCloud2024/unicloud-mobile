@@ -13,7 +13,6 @@ fun NavGraphBuilder.forgotPasswordScreen(navController: NavController) {
         ForgotPasswordScreen(navController = navController, onElevateEmail = { email ->
             receivedEmail = email
         }, onNavigateToVerificationCode = { response ->
-            Log.e("ForgotPasswordNavigation", receivedEmail)
             navController.navigateToVerificationCode(token = response.token, uuid = response.tokenUUID, email = receivedEmail)
         })
     }
