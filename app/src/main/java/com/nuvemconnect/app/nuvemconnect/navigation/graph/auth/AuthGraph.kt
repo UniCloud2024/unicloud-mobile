@@ -25,11 +25,19 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
     }
 }
 
-fun NavController.navigateToAuthGraph()  {
+fun NavController.navigateToAuthGraph() {
     navigate(route = Graph.AuthGraph.route) {
         launchSingleTop = true
-        popUpTo(Graph.AuthGraph.route) {
+        popUpTo(Graph.HomeGraph.route) {
             inclusive = true
         }
+    }
+}
+
+fun NavController.navigateToAuthGraphWithClearBackstack() {
+    navigate(route = Graph.AuthGraph.route) {
+        launchSingleTop = true
+        popUpTo(0)
+        popBackStack()
     }
 }

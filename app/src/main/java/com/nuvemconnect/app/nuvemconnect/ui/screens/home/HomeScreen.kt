@@ -33,10 +33,9 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         scope.launch {
             uiStateWithRemember.collect { state ->
-                if (!state.isAuthenticated)
-                    {
-                        navController.navigateToAuthGraph()
-                    }
+                if (!state.isAuthenticated) {
+                    navController.navigateToAuthGraph()
+                }
             }
         }
     }
@@ -51,10 +50,9 @@ fun HomeScreen(
         Button(onClick = {
             viewModel.logout()
             viewModel.verifyAuthentication()
-            if (!uiState.value.isAuthenticated)
-                {
-                    navController.navigateToAuthGraph()
-                }
+            if (!uiState.value.isAuthenticated) {
+                navController.navigateToAuthGraph()
+            }
         }) {
             Text(text = "Logout")
         }

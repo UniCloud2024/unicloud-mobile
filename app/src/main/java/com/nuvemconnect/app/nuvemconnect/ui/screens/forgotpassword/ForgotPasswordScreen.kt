@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -92,22 +91,20 @@ fun ForgotPasswordScreen(
                     scope.launch {
                         delay(1000)
                         uiStateWithRemember.collect { state ->
-                            if (state.onSucess)
-                                {
-                                    uiState.value.response?.let {
-                                        onElevateEmail(state.email)
-                                        onNavigateToVerificationCode(it)
-                                    }
+                            if (state.onSucess) {
+                                uiState.value.response?.let {
+                                    onElevateEmail(state.email)
+                                    onNavigateToVerificationCode(it)
                                 }
+                            }
 
-                            if (state.onError != null)
-                                {
-                                    uiState.value.onError?.let {
-                                        Toast.makeText(context, state.onError, Toast.LENGTH_LONG).show()
-                                    }
-                                    delay(1000)
-                                    viewModel.dimissError()
+                            if (state.onError != null) {
+                                uiState.value.onError?.let {
+                                    Toast.makeText(context, state.onError, Toast.LENGTH_LONG).show()
                                 }
+                                delay(1000)
+                                viewModel.dimissError()
+                            }
                         }
                     }
                 },

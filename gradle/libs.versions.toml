@@ -19,6 +19,8 @@ okhttp-logging-interceptor = "4.9.3"
 lifecycleRuntimeComposeAndroid = "2.8.4"
 dataStore = "1.1.1"
 sonarqube = "5.1.0.4882"
+android-credentials = "1.3.0"
+google-id = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,10 +48,14 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp-logging-interceptor" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+android-credentials = { module = "androidx.credentials:credentials", name = "android.credentials", version.ref = "android-credentials" }
+credentials-playservices-auth = { module = "androidx.credentials:credentials-play-services-auth", name = "credentials.playservices.auth", version.ref = "android-credentials" }
+google-id = { module = "com.google.android.libraries.identity.googleid:googleid", name = "google.id", version.ref = "google-id" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 

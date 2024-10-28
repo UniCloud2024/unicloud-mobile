@@ -16,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -50,7 +49,6 @@ import com.nuvemconnect.app.nuvemconnect.ui.theme.poppinsFontFamily
 import com.nuvemconnect.app.nuvemconnect.ui.theme.primary100
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -141,11 +139,10 @@ fun LoginScreen(
 
                     scope.launch {
                         uiStateWithRemember.collect { state ->
-                            if (state.onSucess)
-                                {
-                                    delay(1000)
-                                    navigateToHome()
-                                }
+                            if (state.onSucess) {
+                                delay(1000)
+                                navigateToHome()
+                            }
 
                             state.onError?.let {
                                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
@@ -187,7 +184,16 @@ fun LoginScreen(
         }
         Spacer(modifier = modifier.height(16.dp))
         GoogleButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                viewModel.onGoogleLoginCLick()
+                scope.launch {
+                    uiStateWithRemember.collect { state ->
+                        state.onError?.let {
+                            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            },
             text = "Entrar com Google",
             backgroundColor = Color.Transparent,
             textColor = Color.Black,

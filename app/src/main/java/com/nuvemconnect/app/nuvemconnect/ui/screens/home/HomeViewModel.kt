@@ -1,5 +1,6 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
@@ -24,7 +25,7 @@ class HomeViewModel :
 
     init {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isAuthenticated = verifyAuthentication())
+            verifyAuthentication()
         }
     }
 
@@ -34,18 +35,15 @@ class HomeViewModel :
         }
     }
 
-    fun verifyAuthentication(): Boolean {
+    fun verifyAuthentication() {
         viewModelScope.launch {
             repository.readAuthToken().collect { string ->
-                string?.let {
-                    if (it == "")
-                        {
-                            _uiState.value = _uiState.value.copy(isAuthenticated = false)
-                            return@collect
-                        }
+                if (string == null || string == "") {
+                    _uiState.value = _uiState.value.copy(isAuthenticated = false)
+                    return@collect
                 }
             }
         }
-        return false
+        _uiState.value = _uiState.value.copy(isAuthenticated = true)
     }
 }

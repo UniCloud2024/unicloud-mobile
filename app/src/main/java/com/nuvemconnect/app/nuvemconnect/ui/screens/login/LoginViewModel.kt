@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
 import com.nuvemconnect.app.nuvemconnect.model.service.LoginRequest
-import com.nuvemconnect.app.nuvemconnect.model.service.ResetPasswordRequest
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -77,17 +77,20 @@ class LoginViewModel :
         _uiState.value = _uiState.value.copy(onError = null)
     }
 
-    private fun saveTokenJWT(token: String)  {
+    private fun saveTokenJWT(token: String) {
         viewModelScope.launch {
             serviceRepository.saveAuthToken(token)
         }
     }
 
-    fun resetPasswordRequest()  {
+    fun onGoogleLoginCLick() {
         viewModelScope.launch {
-            val response = serviceRepository.resetPasswordRequest(ResetPasswordRequest(uiState.value.email))
-            when (response.code()) {
-                200 -> { }
+            try {
+                serviceRepository.googleOAuth()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(onError = e.message.toString())
+                delay(1000)
+                dimissError()
             }
         }
     }

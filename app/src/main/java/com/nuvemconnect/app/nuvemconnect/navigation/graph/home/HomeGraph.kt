@@ -13,11 +13,18 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
     }
 }
 
-fun NavController.navigateToHomeGraph(){
-    navigate(route = Graph.HomeGraph.route){
+fun NavController.navigateToHomeGraph() {
+    navigate(route = Graph.HomeGraph.route) {
         launchSingleTop = true
-        popUpTo(route = Graph.HomeGraph.route){
+        popUpTo(route = Graph.AuthGraph.route) {
             inclusive = true
         }
+    }
+}
+
+fun NavController.navigateToHomeGraphWithClearBackstack() {
+    navigate(route = Graph.HomeGraph.route) {
+        launchSingleTop = true
+        popUpTo(0)
     }
 }

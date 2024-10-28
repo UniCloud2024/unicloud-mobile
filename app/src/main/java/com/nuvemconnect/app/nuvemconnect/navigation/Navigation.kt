@@ -3,15 +3,16 @@ package com.nuvemconnect.app.nuvemconnect.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.authGraph
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.home.homeGraph
 
 @Composable
-fun Navigation(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
-
+fun Navigation(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+) {
     NavHost(
         navController = navController,
         startDestination = Graph.HomeGraph.route,

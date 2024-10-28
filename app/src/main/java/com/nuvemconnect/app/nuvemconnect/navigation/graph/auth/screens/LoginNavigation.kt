@@ -16,6 +16,15 @@ fun NavGraphBuilder.loginScreen(navController: NavController) {
 fun NavController.navigateToLogin() {
     navigate(route = Screens.Login.route) {
         launchSingleTop = true
-        popUpTo(Screens.Login.route)
+        popUpTo(Screens.Login.route) {
+            inclusive = true
+        }
+    }
+}
+
+fun NavController.navigateToLoginWithClearBackstack() {
+    navigate(route = Screens.Login.route) {
+        launchSingleTop = true
+        popUpTo(0)
     }
 }

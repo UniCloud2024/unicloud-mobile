@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.R
 import com.nuvemconnect.app.nuvemconnect.model.error.PasswordErrorType
-import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToLogin
+import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.screens.navigateToLoginWithClearBackstack
 import com.nuvemconnect.app.nuvemconnect.ui.components.CustomButton
 import com.nuvemconnect.app.nuvemconnect.ui.components.PasswordTextField
 import com.nuvemconnect.app.nuvemconnect.ui.components.TopBar
@@ -91,7 +91,7 @@ fun ResetPasswordScreen(
                         uiStateWithRemember.collect { state ->
                             if (state.onSucess != null) {
                                 Toast.makeText(context, state.onSucess, Toast.LENGTH_LONG).show()
-                                navController.navigateToLogin()
+                                navController.navigateToLoginWithClearBackstack()
                                 delay(1000)
                                 viewModel.dimissSucess()
                             }
