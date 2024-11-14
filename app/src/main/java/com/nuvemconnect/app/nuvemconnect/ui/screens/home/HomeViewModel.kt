@@ -1,6 +1,5 @@
 package com.nuvemconnect.app.nuvemconnect.ui.screens.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nuvemconnect.app.nuvemconnect.data.repository.ServiceRepository
@@ -13,6 +12,9 @@ import org.koin.core.component.inject
 data class HomeUiState(
     val token: String = "",
     val isAuthenticated: Boolean = true,
+    val inOnSearch: Boolean = false,
+    val textToSearch: String = "",
+    val query: String = "",
 )
 
 class HomeViewModel :
@@ -35,6 +37,15 @@ class HomeViewModel :
         }
     }
 
+    fun onSearchClick() {
+        isOnSearchChange()
+        // Fazer pesquisa aqui e retornar para a tela
+    }
+
+    fun isOnSearchChange() {
+        _uiState.value = _uiState.value.copy(inOnSearch = !uiState.value.inOnSearch)
+    }
+
     fun verifyAuthentication() {
         viewModelScope.launch {
             repository.readAuthToken().collect { string ->
@@ -45,5 +56,13 @@ class HomeViewModel :
             }
         }
         _uiState.value = _uiState.value.copy(isAuthenticated = true)
+    }
+
+    fun onQueryChange(newValue: String) {
+        _uiState.value = _uiState.value.copy(query = newValue)
+    }
+
+    fun resetQuery() {
+        _uiState.value = _uiState.value.copy(query = "")
     }
 }

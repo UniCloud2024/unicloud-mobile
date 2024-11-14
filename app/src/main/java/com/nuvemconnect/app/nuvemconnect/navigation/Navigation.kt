@@ -12,10 +12,11 @@ import com.nuvemconnect.app.nuvemconnect.navigation.graph.home.homeGraph
 fun Navigation(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    startDestination: String,
 ) {
     NavHost(
         navController = navController,
-        startDestination = Graph.HomeGraph.route,
+        startDestination = startDestination,
     ) {
         // Splash screen
         splashScreen(navController, modifier)

@@ -1,5 +1,6 @@
 package com.nuvemconnect.app.nuvemconnect.di.modules
 
+import com.nuvemconnect.app.nuvemconnect.ui.activities.MainActivity.MainViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.ForgotPasswordViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.ResetPasswordViewModel
 import com.nuvemconnect.app.nuvemconnect.ui.screens.forgotpassword.VerificationCodeViewModel
@@ -17,4 +18,5 @@ val viewModelModule =
         viewModel { VerificationCodeViewModel() }
         viewModel { ResetPasswordViewModel() }
         viewModel { RegisterViewModel() }
+        viewModel { MainViewModel() }
     }
