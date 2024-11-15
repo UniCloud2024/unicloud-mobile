@@ -18,9 +18,18 @@ retrofit = "2.11.0"
 okhttp-logging-interceptor = "4.9.3"
 lifecycleRuntimeComposeAndroid = "2.8.4"
 dataStore = "1.1.1"
+androidSecurity = "1.1.0-alpha04"
 sonarqube = "5.1.0.4882"
+truth = "1.4.4"
+mockito = "5.14.2"
+mockito-core = "5.14.2"
+mockitoKotlin = "5.4.0"
+mockito-inline = "5.2.0"
 android-credentials = "1.3.0"
 google-id = "1.1.1"
+robolectric = "4.13"
+coreKtxVersion = "1.6.1"
+appCompat = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,14 +57,25 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp-logging-interceptor" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+datastore-core = { module = "androidx.datastore:datastore-preferences-core", name = "datastore.core", version.ref = "dataStore" }
+android-security = { module = "androidx.security:security-crypto", name = "android.security", version.ref = "androidSecurity" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+mockito-core = { module = "org.mockito:mockito-core", name = "mockito.core", version.ref = "mockito-core" }
+mockito-android = { module = "org.mockito:mockito-android", name = "mockito.android", version.ref = "mockito" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", name = "mockito.kotlin", version.ref = "mockitoKotlin" }
+mockito-inline = { module = "org.mockito:mockito-inline", name = "mockito.inline", version.ref = "mockito-inline" }
 android-credentials = { module = "androidx.credentials:credentials", name = "android.credentials", version.ref = "android-credentials" }
 credentials-playservices-auth = { module = "androidx.credentials:credentials-play-services-auth", name = "credentials.playservices.auth", version.ref = "android-credentials" }
 google-id = { module = "com.google.android.libraries.identity.googleid:googleid", name = "google.id", version.ref = "google-id" }
+robolectric = { module = "org.robolectric:robolectric", name = "robolectric", version.ref = "robolectric" }
+core-ktx = { module = "androidx.test:core-ktx", name = "core.ktx", version.ref = "coreKtxVersion" }
+compose-ui-test = { module = "androidx.compose.ui:ui-test-manifest", name = "compose.ui.test", version.ref = "composeBom" }
+appCompat = { module = "androidx.appcompat:appcompat", name = "appCompact", version.ref = "appCompat" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 

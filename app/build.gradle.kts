@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.sonarqube)
 }
 
 android {
@@ -48,6 +49,15 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    android {
+        lint {
+            htmlReport = true
+            xmlReport = true
+            xmlOutput = file(layout.buildDirectory.file("reports/lint-results-debug.xml"))
+            htmlOutput = file(layout.buildDirectory.file("reports/lint-results-debug.html"))
+        }
+    }
 }
 
 dependencies {
@@ -60,6 +70,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -77,7 +88,19 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.datastore.core)
+    implementation(libs.android.security)
     implementation(libs.android.credentials)
     implementation(libs.credentials.playservices.auth)
     implementation(libs.google.id)
+    testImplementation(libs.truth)
+    androidTestImplementation(libs.truth)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.android)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.robolectric)
+    androidTestImplementation(libs.core.ktx)
+    implementation(libs.appCompat)
+    androidTestImplementation(libs.compose.ui.test)
 }
