@@ -31,7 +31,7 @@ class MainViewModel :
         viewModelScope.launch {
             repository.readAuthToken().collect { string ->
                 if (string == null || string == "") {
-                    _uiState.value = _uiState.value.copy(route = Graph.HomeGraph.route)
+                    _uiState.value = _uiState.value.copy(route = Graph.AuthGraph.route)
                     return@collect
                 }
             }

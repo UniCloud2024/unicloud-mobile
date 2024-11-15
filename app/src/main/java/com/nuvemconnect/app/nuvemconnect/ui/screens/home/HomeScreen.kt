@@ -14,6 +14,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,6 +22,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuvemconnect.app.nuvemconnect.navigation.graph.auth.navigateToAuthGraph
 import com.nuvemconnect.app.nuvemconnect.ui.theme.NuvemConnectTheme
+import com.nuvemconnect.app.nuvemconnect.R
 
 @Composable
 fun HomeScreen(
@@ -45,11 +47,14 @@ fun HomeScreen(
                     navController.navigateToAuthGraph()
                 }
             }) {
-                Text(text = "Logout")
+                Text(text = "Logout", modifier = Modifier.padding(horizontal = 5.dp))
+                Icon(painter = painterResource(id = R.drawable.logout), contentDescription = "Logout")
             }
         } else {
             Icon(imageVector = Icons.Rounded.Clear, contentDescription = "Clean page", modifier = Modifier.size(200.dp))
-            Text("Não encontramos nada com os termos pesquisados", modifier = Modifier.padding(horizontal = 16.dp).padding(top = 40.dp))
+            Text("Não encontramos nada com os termos pesquisados", modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 40.dp))
             TextButton(onClick = {
                 viewModel.isOnSearchChange()
                 viewModel.resetQuery()
